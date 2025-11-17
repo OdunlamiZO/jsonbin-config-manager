@@ -15,12 +15,25 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-          server-id: github-java-jsonbin
-          server-username: GITHUB_ACTOR
-          server-password: GITHUB_TOKEN
+          cache: 'maven'
+
+      - name: Configure Maven (GitHub Packages)
+        run: |
+          mkdir -p ~/.m2
+          cat <<EOF > ~/.m2/settings.xml
+          <settings>
+            <servers>
+              <server>
+                <id>github-java-jsonbin</id>
+                <username>\${GITHUB_ACTOR}</username>
+                <password>${{ secrets.JSONBIN_CONFIG_MANAGER_GITHUB_TOKEN }}</password>
+              </server>
+            </servers>
+          </settings>
+          EOF
 
       - name: Install dependencies
-        run: mvn install -Pgithub -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+        run: mvn install -DskipTests -Dmaven.javadoc.skip=true -B -V
 
       - name: Run tests and collect coverage
         run: mvn -B test
