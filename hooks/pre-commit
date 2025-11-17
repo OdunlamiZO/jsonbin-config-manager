@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Run code formatting check (using Spotless plugin)
+mvn spotless:check
+
+# Check the exit code of the spotless command
+spotless_exit_code=$?
+
+# Analyze the spotless exit code
+if [ $spotless_exit_code -ne 0 ]; then
+  # Exit with non-zero code to abort commit
+  exit 1
+fi
+
+# If formatting succeeded, add all files
+git add .
