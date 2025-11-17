@@ -96,13 +96,13 @@
   <profiles>
     <profile>
       <id>github</id>
-      <distributionManagement>
+      <repositories>
         <repository>
           <id>github-java-jsonbin</id>
           <name>Java JSONBin Maven Package</name>
           <url>https://maven.pkg.github.com/OdunlamiZO/java-jsonbin</url>
         </repository>
-      </distributionManagement>
+      </repositories>
     </profile>
     <profile>
       <id>development</id>
