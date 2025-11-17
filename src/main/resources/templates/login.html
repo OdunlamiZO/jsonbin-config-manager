@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>JSONBin Config Manager - Login</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" th:href="@{/css/application.css}" />
+  </head>
+
+  <body class="poppins-regular">
+    <div class="ss-page">
+      <div class="flex-1 flex items-center justify-center">
+        <div
+          class="p-6 w-4/5 max-w-[480px] bg-white shadow-lg rounded-lg flex flex-col items-center gap-6"
+        >
+          <h1 class="text-2xl font-semibold text-primary-dark tracking-wide">
+            JSONBin Config Manager
+          </h1>
+
+          <form th:action="@{/login}" method="post" class="w-full">
+            <div
+              th:if="${errorMessage}"
+              th:text="${errorMessage}"
+              class="mb-4 text-sm text-red-600 text-center"
+            ></div>
+
+            <div class="pb-7 relative w-full">
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder=" "
+                class="peer w-full border border-primary-base rounded-md pt-5 pb-1.5 px-2.5 text-xs placeholder-transparent text-primary-dark bg-primary-lighter focus:outline-none focus:border-primary-dark focus:ring-1 focus:ring-primary-dark"
+              />
+
+              <label
+                for="email"
+                class="absolute left-2.5 top-1.5 text-primary-base text-xs transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-primary-base peer-focus:top-1.5 peer-focus:text-xs peer-focus:text-primary-dark"
+              >
+                Email
+              </label>
+            </div>
+
+            <div class="relative w-full">
+              <input
+                id="password"
+                name="password"
+                type="password"
+                placeholder=" "
+                class="peer w-full border border-primary-base rounded-md pt-5 pb-1.5 px-2.5 text-xs placeholder-transparent text-primary-dark bg-primary-lighter focus:outline-none focus:border-primary-dark focus:ring-1 focus:ring-primary-dark pr-10"
+              />
+
+              <label
+                for="password"
+                class="absolute left-2.5 top-1.5 text-primary-base text-xs transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-primary-base peer-focus:top-1.5 peer-focus:text-xs peer-focus:text-primary-dark"
+              >
+                Password
+              </label>
+
+              <button
+                type="button"
+                onclick="togglePasswordVisibility()"
+                class="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-primary-base focus:outline-none"
+              >
+                Show
+              </button>
+            </div>
+
+            <script>
+              function togglePasswordVisibility() {
+                const input = document.getElementById("password");
+                const button = event.currentTarget;
+                const isVisible = input.type === "text";
+                input.type = isVisible ? "password" : "text";
+                button.textContent = isVisible ? "Show" : "Hide";
+              }
+            </script>
+
+            <div class="w-full mt-2 mb-5 text-right">
+              <a href="#" class="text-xs text-primary-base hover:underline"
+                >Forgot Password?</a
+              >
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-primary-dark text-white text-sm py-2 rounded-md hover:bg-primary-base transition-colors"
+            >
+              Login
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div th:replace="fragments/footer :: footer"></div>
+    </div>
+  </body>
+</html>
