@@ -93,17 +93,25 @@
     </dependency>
   </dependencies>
 
+  <repositories>
+    <repository>
+      <id>github-java-jsonbin</id>
+      <name>Java JSONBin Maven Package</name>
+      <url>https://maven.pkg.github.com/OdunlamiZO/java-jsonbin</url>
+    </repository>
+  </repositories>
+
   <profiles>
-    <profile>
-      <id>github</id>
-      <repositories>
-        <repository>
-          <id>github-java-jsonbin</id>
-          <name>Java JSONBin Maven Package</name>
-          <url>https://maven.pkg.github.com/OdunlamiZO/java-jsonbin</url>
-        </repository>
-      </repositories>
-    </profile>
+    <!--    <profile>-->
+    <!--      <id>github</id>-->
+    <!--      <repositories>-->
+    <!--        <repository>-->
+    <!--          <id>github-java-jsonbin</id>-->
+    <!--          <name>Java JSONBin Maven Package</name>-->
+    <!--          <url>https://maven.pkg.github.com/OdunlamiZO/java-jsonbin</url>-->
+    <!--        </repository>-->
+    <!--      </repositories>-->
+    <!--    </profile>-->
     <profile>
       <id>development</id>
       <activation>
