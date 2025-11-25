@@ -6,8 +6,8 @@ module.exports = {
       colors: {
         "primary-dark": "#000000",
         "primary-base": "#333333",
+        "primary-mid": "#aaaaaa",
         "primary-light": "#f5f5f5",
-        "primary-lighter": "#ffffff",
         "badge-green-bg": "#d1fae5",
         "badge-green-text": "#065f46",
         "badge-yellow-bg": "#fef3c7",

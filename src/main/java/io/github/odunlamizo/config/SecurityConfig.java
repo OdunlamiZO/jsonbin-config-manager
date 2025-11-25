@@ -30,7 +30,7 @@ public class SecurityConfig {
                                 formLogin
                                         .loginPage("/login")
                                         .usernameParameter("email")
-                                        .defaultSuccessUrl("/", true)
+                                        .defaultSuccessUrl("/dashboard", true)
                                         .failureUrl("/login?error=true"))
                 .logout(logout -> logout.logoutSuccessUrl("/login"))
                 .authorizeHttpRequests(

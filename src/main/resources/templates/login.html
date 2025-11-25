@@ -9,14 +9,18 @@
   </head>
 
   <body class="poppins-regular">
-    <div class="ss-page">
+    <div class="jsonbin-page">
       <div class="flex-1 flex items-center justify-center">
         <div
           class="p-6 w-4/5 max-w-[480px] bg-white shadow-lg rounded-lg flex flex-col items-center gap-6"
         >
-          <h1 class="text-2xl font-semibold text-primary-dark tracking-wide">
-            JSONBin Config Manager
-          </h1>
+          <div class="flex flex-col items-center gap-2">
+            <span th:replace="fragments/json-icon :: jsonIcon(size=32)"></span>
+
+            <span class="text-xl font-semibold tracking-wide">
+              JSONBin Config Manager
+            </span>
+          </div>
 
           <form th:action="@{/login}" method="post" class="w-full">
             <div
@@ -31,7 +35,7 @@
                 name="email"
                 type="email"
                 placeholder=" "
-                class="peer w-full border border-primary-base rounded-md pt-5 pb-1.5 px-2.5 text-xs placeholder-transparent text-primary-dark bg-primary-lighter focus:outline-none focus:border-primary-dark focus:ring-1 focus:ring-primary-dark"
+                class="peer w-full border border-primary-base rounded-md pt-5 pb-1.5 px-2.5 text-xs placeholder-transparent bg-white focus:outline-none focus:border-primary-dark focus:ring-1 focus:ring-primary-dark"
               />
 
               <label
@@ -48,7 +52,7 @@
                 name="password"
                 type="password"
                 placeholder=" "
-                class="peer w-full border border-primary-base rounded-md pt-5 pb-1.5 px-2.5 text-xs placeholder-transparent text-primary-dark bg-primary-lighter focus:outline-none focus:border-primary-dark focus:ring-1 focus:ring-primary-dark pr-10"
+                class="peer w-full border border-primary-base rounded-md pt-5 pb-1.5 px-2.5 text-xs placeholder-transparent bg-white focus:outline-none focus:border-primary-dark focus:ring-1 focus:ring-primary-dark pr-10"
               />
 
               <label
