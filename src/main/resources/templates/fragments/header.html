@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="header">
+  <div
+    class="p-4 w-full border-b border-primary-mid flex items-center justify-between"
+  >
+    <div class="flex items-center gap-2">
+      <span th:replace="fragments/json-icon :: jsonIcon(size=28)"></span>
+
+      <span class="text-l font-semibold tracking-wide">
+        JSONBin Config Manager
+      </span>
+    </div>
+
+    <div class="relative">
+      <button
+        class="h-10 w-10 rounded-full flex items-center justify-center bg-primary-dark text-white text-lg font-semibold"
+        onclick="toggleMenu()"
+      >
+        <span
+          th:text="${#authentication.principal?.username != null ? #strings.substring(#authentication.principal.username, 0, 1).toUpperCase() : 'U'}"
+        ></span>
+      </button>
+
+      <div
+        id="main-menu"
+        class="absolute right-0 mt-2 w-48 bg-primary-light shadow-lg rounded-lg border border-primary-light hidden z-50"
+      >
+        <ul class="py-2">
+          <li>
+            <form th:action="@{/logout}" method="post" class="w-full">
+              <button
+                type="submit"
+                class="flex items-center gap-3 w-full px-4 py-2 text-primary-dark hover:bg-badge-red-bg hover:text-badge-red-text transition-colors group"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                  class="h-5 w-5 text-primary-dark group-hover:text-badge-red-text transition-colors"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 192 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l210.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128zM160 96c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 32C43 32 0 75 0 128L0 384c0 53 43 96 96 96l64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l64 0z"
+                  />
+                </svg>
+                Logout
+              </button>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("main-menu");
+      menu.classList.toggle("hidden");
+    }
+
+    document.addEventListener("click", function (event) {
+      const menu = document.getElementById("main-menu");
+      const button = event.target.closest('button[onclick="toggleMenu()"]');
+      const isMenu = menu.contains(event.target);
+      if (!menu.classList.contains("hidden") && !isMenu && !button) {
+        menu.classList.add("hidden");
+      }
+    });
+  </script>
+</html>
