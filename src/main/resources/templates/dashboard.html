@@ -12,7 +12,53 @@
     <div class="jsonbin-page">
       <div th:replace="fragments/header :: header"></div>
 
-      <div class="flex-1 bg-primary-light"></div>
+      <div class="flex-1 px-16 py-8 bg-primary-light">
+        <div class="flex items-center justify-between">
+          <span class="text-lg font-semibold">Projects</span>
+
+          <button
+            class="flex items-center gap-2 rounded-lg bg-primary-dark px-4 py-2 text-sm font-semibold text-white transition-opacity hover:bg-primary-base"
+          >
+            <svg
+              class="h-4 w-4 text-white -translate-x-1"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+            New Project
+          </button>
+        </div>
+
+        <div
+          th:if="${#lists.isEmpty(projects)}"
+          class="mt-32 flex flex-col items-center justify-center text-primary-base"
+        >
+          <svg
+            class="h-12 w-12 mb-3 text-primary-mid"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <circle cx="12" cy="12" r="10" stroke-dasharray="4 2" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M8 12h8M12 8v8"
+            />
+          </svg>
+          <span class="text-base"
+            >No projects found. Click <b>New Project</b> to get started.</span
+          >
+        </div>
+      </div>
 
       <div th:replace="fragments/footer :: footer"></div>
     </div>

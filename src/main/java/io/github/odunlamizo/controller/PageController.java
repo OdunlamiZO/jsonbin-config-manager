@@ -1,5 +1,6 @@
 package io.github.odunlamizo.controller;
 
+import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +21,9 @@ public class PageController {
     }
 
     @GetMapping("/dashboard")
-    public String dashboard() {
+    public String dashboard(Model model) {
+        model.addAttribute("projects", Collections.emptyList());
+
         return "dashboard";
     }
 }
