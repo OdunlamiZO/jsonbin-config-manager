@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>JSONBin Config Manager - Dashboard</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" th:href="@{/css/application.css}" />
+  </head>
+
+  <body class="poppins-regular">
+    <div class="jsonbin-page">
+      <div th:replace="fragments/header :: header"></div>
+
+      <div class="flex-1 p-8 flex flex-col items-center gap-8 bg-primary-light">
+        <div class="w-2/3 max-w-[800px] space-y-2">
+          <h1 class="text-2xl font-semibold">Account</h1>
+          <p>View your profile and manage password settings.</p>
+        </div>
+
+        <div
+          class="w-2/3 max-w-[800px] py-6 border border-primary-mid bg-white rounded-lg"
+        >
+          <div class="px-6 pb-6 space-y-1 border-b border-primary-mid">
+            <h1 class="text-lg font-medium">Profile Information</h1>
+            <p class="text-sm">Your personal details.</p>
+          </div>
+
+          <div class="grid grid-cols-3 px-6 pt-6 gap-2">
+            <div class="col-span-1 space-y-1">
+              <span class="block text-primary-base">Role</span>
+              <span
+                class="block"
+                th:text="${#authentication.principal?.authorities[0]?.authority == 'ROLE_ADMIN' ? 'Administrator' : 
+                #authentication.principal?.authorities[0]?.authority == 'ROLE_EDITOR' ? 'Editor' : 
+                #authentication.principal.principal?.authorities[0]?.authority == 'ROLE_VIEWER' ? 'Viewer' : 
+                'N/A'}"
+              ></span>
+            </div>
+
+            <div class="col-span-2 space-y-1">
+              <span class="block text-primary-base">Email</span>
+              <span
+                class="block"
+                th:text="${#authentication.principal?.username}"
+              ></span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="w-2/3 max-w-[800px] py-6 border border-primary-mid bg-white rounded-lg"
+        >
+          <div class="px-6 pb-6 space-y-1 border-b border-primary-mid">
+            <h1 class="text-lg font-medium">Update Password</h1>
+            <p class="text-sm">
+              Ensure your account is using a long, random password to stay
+              secure.
+            </p>
+          </div>
+
+          <form class="px-6 pt-6" method="post" th:action="@{/password/update}">
+            <div
+              th:if="${success}"
+              class="mb-6 flex items-center gap-3 px-4 py-3 rounded-lg bg-badge-green-bg border border-badge-green-text text-badge-green-text"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                />
+              </svg>
+
+              <span th:text="${success}" class="font-medium"></span>
+            </div>
+
+            <div
+              th:if="${error}"
+              class="mb-6 flex items-center gap-3 px-4 py-3 rounded-lg bg-badge-red-bg border border-badge-red-text text-badge-red-text"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  fill="currentColor"
+                  opacity="0.1"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 8v4m0 4h.01"
+                />
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  fill="none"
+                />
+              </svg>
+
+              <span th:text="${error}" class="font-medium"></span>
+            </div>
+
+            <div class="mb-4">
+              <label
+                for="currentPassword"
+                class="block mb-1 text-primary-base text-sm"
+                >Current Password</label
+              >
+              <input
+                id="currentPassword"
+                name="currentPassword"
+                type="password"
+                class="w-full border border-primary-base rounded-md px-3 py-2 text-sm focus:outline-none focus:border-primary-dark focus:ring-1 focus:ring-primary-dark"
+              />
+            </div>
+
+            <div class="mb-4">
+              <label
+                for="newPassword"
+                class="block mb-1 text-primary-base text-sm"
+                >New Password</label
+              >
+              <input
+                id="newPassword"
+                name="newPassword"
+                type="password"
+                class="w-full border border-primary-base rounded-md px-3 py-2 text-sm focus:outline-none focus:border-primary-dark focus:ring-1 focus:ring-primary-dark"
+              />
+            </div>
+
+            <div class="mb-6">
+              <label
+                for="confirmNewPassword"
+                class="block mb-1 text-primary-base text-sm"
+                >Confirm New Password</label
+              >
+              <input
+                id="confirmNewPassword"
+                name="confirmNewPassword"
+                type="password"
+                class="w-full border border-primary-base rounded-md px-3 py-2 text-sm focus:outline-none focus:border-primary-dark focus:ring-1 focus:ring-primary-dark"
+              />
+            </div>
+
+            <div class="flex justify-end">
+              <button
+                type="submit"
+                class="bg-primary-dark text-white px-4 py-2 rounded-lg hover:bg-primary-base"
+              >
+                Update Password
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div th:replace="fragments/footer :: footer"></div>
+    </div>
+  </body>
+</html>
