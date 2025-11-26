@@ -26,4 +26,9 @@ public class PageController {
 
         return "dashboard";
     }
+
+    @GetMapping("/account")
+    public String accountPage() {
+        return "account";
+    }
 }
