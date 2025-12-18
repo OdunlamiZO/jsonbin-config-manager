@@ -1,6 +1,6 @@
-package io.github.odunlamizo.controller;
+package io.github.odunlamizo.jcm.controller;
 
-import java.util.Collections;
+import io.github.odunlamizo.jcm.service.ConfigService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequiredArgsConstructor
 public class PageController {
+
+    private final ConfigService configService;
 
     @GetMapping("/login")
     public String loginPage(
@@ -22,7 +24,7 @@ public class PageController {
 
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
-        model.addAttribute("projects", Collections.emptyList());
+        model.addAttribute("projects", configService.getAllProjects());
 
         return "dashboard";
     }

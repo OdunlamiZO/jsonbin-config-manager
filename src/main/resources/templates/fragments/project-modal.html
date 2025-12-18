@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="projectModal">
+  <div
+    id="project-modal"
+    class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 justify-center items-center"
+  >
+    <div class="bg-white p-6 rounded-lg w-1/3 relative">
+      <button
+        class="absolute top-3 right-3 text-primary-base hover:text-primary-dark"
+        onclick="closeProjectModal()"
+        type="button"
+        aria-label="Close"
+      >
+        ✕
+      </button>
+
+      <div class="space-y-1 mb-6">
+        <h1 class="text-lg font-semibold">Create New Project</h1>
+
+        <p class="text-sm text-primary-base">
+          Enter a name and description for your new project.
+        </p>
+      </div>
+
+      <form method="post" th:action="@{/project/create}">
+        <div class="mb-4 space-y-1">
+          <label class="block text-sm font-medium">Project Name</label>
+          <input
+            type="text"
+            name="name"
+            class="w-full border border-primary-base rounded-md px-3 py-2 text-sm focus:outline-none focus:border-primary-dark focus:ring-1 focus:ring-primary-dark"
+            required
+          />
+        </div>
+
+        <div class="mb-4 space-y-1">
+          <label class="block text-sm font-medium"
+            >Description (Optional)</label
+          >
+          <textarea
+            name="description"
+            class="w-full border border-primary-base rounded-md px-3 py-2 text-sm focus:outline-none focus:border-primary-dark focus:ring-1 focus:ring-primary-dark"
+          ></textarea>
+        </div>
+
+        <div class="mb-8">
+          <button
+            type="button"
+            onclick="toggleAdvancedOptions()"
+            class="text-sm font-medium text-primary-base hover:text-primary-dark flex items-center gap-1"
+          >
+            <span id="advanced-toggle-icon">▸</span>
+            Advanced (Optional)
+          </button>
+
+          <div id="advanced-options" class="hidden mt-3 space-y-1">
+            <label class="block text-sm font-medium">Collection ID</label>
+
+            <input
+              type="text"
+              name="collectionId"
+              placeholder="e.g. 65b9e853266cfc3fde83a460"
+              class="w-full border border-primary-base rounded-md px-3 py-2 text-sm focus:outline-none focus:border-primary-dark focus:ring-1 focus:ring-primary-dark"
+            />
+
+            <p class="text-xs text-primary-base">
+              Optional. ID of an existing&nbsp;<a
+                href="https://jsonbin.io/api-reference/collections/get-started"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="underline hover:text-primary-dark"
+                >JSONBin.io collection</a
+              >&nbsp;to attach this project to.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-3">
+          <button
+            type="button"
+            onclick="closeProjectModal()"
+            class="w-28 px-4 py-2 rounded font-medium bg-red-bg text-red-text border border-red-border transition-colors duration-150 hover:bg-red-bg-hover hover:text-red-text-hover hover:border-red-border-hover"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="w-28 px-4 py-2 rounded font-medium bg-primary-base text-white border border-primary-dark transition-colors duration-150 hover:bg-primary-dark hover:border-primary-dark"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function openCreateProjectModal() {
+      const modal = document.getElementById("project-modal");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeProjectModal() {
+      const modal = document.getElementById("project-modal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    function toggleAdvancedOptions() {
+      const panel = document.getElementById("advanced-options");
+      const icon = document.getElementById("advanced-toggle-icon");
+
+      const isHidden = panel.classList.contains("hidden");
+
+      panel.classList.toggle("hidden", !isHidden);
+      icon.textContent = isHidden ? "▾" : "▸";
+    }
+  </script>
+</html>

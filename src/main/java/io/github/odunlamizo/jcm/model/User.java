@@ -1,4 +1,4 @@
-package io.github.odunlamizo.model;
+package io.github.odunlamizo.jcm.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -8,7 +8,8 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "user_model")
+@Entity
+@Table(name = "user_model")
 public class User {
 
     @Id

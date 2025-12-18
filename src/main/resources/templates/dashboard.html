@@ -12,12 +12,13 @@
     <div class="jsonbin-page">
       <div th:replace="fragments/header :: header"></div>
 
-      <div class="flex-1 px-16 py-8 bg-primary-light">
+      <div class="flex-1 px-24 py-8 bg-primary-light space-y-4">
         <div class="flex items-center justify-between">
           <span class="text-lg font-semibold">Projects</span>
 
           <button
             class="flex items-center gap-2 rounded-lg bg-primary-dark px-4 py-2 text-sm font-semibold text-white transition-opacity hover:bg-primary-base"
+            onclick="openCreateProjectModal()"
           >
             <svg
               class="h-4 w-4 text-white -translate-x-1"
@@ -38,7 +39,7 @@
 
         <div
           th:if="${#lists.isEmpty(projects)}"
-          class="mt-32 flex flex-col items-center justify-center text-primary-base"
+          class="mt-52 flex flex-col items-center justify-center text-primary-base"
         >
           <svg
             class="h-12 w-12 mb-3 text-primary-mid"
@@ -58,7 +59,128 @@
             >No projects found. Click <b>New Project</b> to get started.</span
           >
         </div>
+
+        <div th:else class="flex flex-col"></div>
+
+        <div th:else class="flex flex-col gap-8">
+          <div
+            th:each="project : ${projects}"
+            class="border border-primary-mid bg-white rounded-lg"
+          >
+            <div
+              class="p-4 flex items-center justify-between border-b border-primary-mid"
+            >
+              <div>
+                <h2
+                  class="text-lg font-semibold text-primary-dark"
+                  th:text="${project.name}"
+                ></h2>
+
+                <p
+                  class="text-sm text-primary-base"
+                  th:text="${project.description}"
+                ></p>
+              </div>
+
+              <div></div>
+            </div>
+
+            <div class="flex">
+              <div
+                th:each="env,iterStat : ${project.envs}"
+                th:class="${'p-3 flex-1' + (!iterStat.last ? ' border-r border-primary-mid' : '')}"
+              >
+                <div class="flex items-center justify-between">
+                  <span
+                    th:text="${env.name == 'dev' ? 'Development' : (env.name == 'staging' ? 'Staging' : (env.name == 'prod' ? 'Production' : env.name))}"
+                  ></span>
+
+                  <span
+                    th:text="${env.name}"
+                    th:class="${'ml-2 px-2 py-0.5 rounded text-xs font-semibold ' +
+                      (env.name == 'dev' ? 'bg-blue-bg text-blue-text border border-blue-border' :
+                      (env.name == 'staging' ? 'bg-yellow-bg text-yellow-text border border-yellow-border' :
+                      (env.name == 'prod' ? 'bg-green-bg text-green-text border border-green-border' :
+                      'bg-primary-mid text-primary-dark border border-primary-base')))}"
+                  ></span>
+                </div>
+
+                <div
+                  class="mt-2 flex flex-col gap-2"
+                  th:if="${env.record != null and env.record.values != null}"
+                >
+                  <div th:each="keyStat : ${env.record.values}">
+                    <div class="flex items-center gap-2">
+                      <span
+                        class="flex-1 bg-primary-light border border-primary-mid rounded px-3 py-1 text-xs text-primary-base"
+                        th:text="${keyStat.key}"
+                      ></span>
+
+                      <span
+                        class="flex-1 bg-primary-light border border-primary-mid rounded px-3 py-1 text-xs text-primary-dark"
+                        th:text="${keyStat.value}"
+                      ></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3 w-full" style="position: relative">
+                  <button
+                    type="button"
+                    class="add-variable-btn w-full flex items-center justify-center rounded border border-primary-mid bg-white px-4 py-1 text-sm font-semibold text-primary-dark hover:bg-primary-light hover:border-primary-base transition-colors"
+                    onclick="this.style.display='none'; const form = this.nextElementSibling; form.classList.remove('hidden'); form.querySelector('input[name=key]').focus();"
+                  >
+                    Add Variable
+                  </button>
+
+                  <form
+                    class="mt-2 flex-col space-y-2 hidden"
+                    th:action="@{/project/{projectId}/env/{envId}/variable(projectId=${project.id},envId=${env.id})}"
+                    method="post"
+                  >
+                    <div class="flex gap-2">
+                      <input
+                        name="key"
+                        type="text"
+                        placeholder="Key"
+                        required
+                        class="flex-1 border border-primary-mid rounded px-2 py-1 text-sm focus:outline-none focus:border-primary-base"
+                      />
+
+                      <input
+                        name="value"
+                        type="text"
+                        placeholder="Value"
+                        required
+                        class="flex-1 border border-primary-mid rounded px-2 py-1 text-sm focus:outline-none focus:border-primary-base"
+                      />
+                    </div>
+
+                    <div class="flex gap-2">
+                      <button
+                        type="button"
+                        class="flex-1 rounded border border-primary-mid bg-white text-primary-dark font-semibold py-1 hover:bg-primary-light hover:border-primary-base transition-colors text-sm"
+                        onclick="const wrapper=this.closest('div[style]'); const btn=wrapper.querySelector('.add-variable-btn'); btn.style.display='flex'; this.form.classList.add('hidden');"
+                      >
+                        Cancel
+                      </button>
+
+                      <button
+                        type="submit"
+                        class="flex-1 rounded bg-primary-dark text-white font-semibold py-1 hover:bg-primary-base transition-colors text-sm"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <div th:replace="fragments/project-modal :: projectModal"></div>
 
       <div th:replace="fragments/footer :: footer"></div>
     </div>

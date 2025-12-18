@@ -1,4 +1,4 @@
-package io.github.odunlamizo.model;
+package io.github.odunlamizo.jcm.model;
 
 public enum Role {
     ADMIN,
