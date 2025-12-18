@@ -53,4 +53,12 @@ public class ActionController {
 
         return "redirect:/dashboard";
     }
+
+    @PostMapping("/project/{projectId}/env/{envId}/variable/{key}/delete")
+    public String deleteVariable(
+            @PathVariable int projectId, @PathVariable int envId, @PathVariable String key) {
+        configService.deleteVariable(projectId, envId, key);
+
+        return "redirect:/dashboard";
+    }
 }

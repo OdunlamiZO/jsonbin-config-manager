@@ -86,4 +86,16 @@ public class ConfigServiceImpl implements ConfigService {
 
         jsonBin.updateBin(new EnvRecord(values), env.getExternalId());
     }
+
+    @Override
+    public void deleteVariable(int projectId, int envId, String key) {
+        Env env = envRepository.findById(envId).orElseThrow();
+        EnvRecord record = jsonBin.readBin(env.getExternalId(), EnvRecord.class).getRecord();
+
+        Map<String, String> values =
+                Objects.requireNonNullElse(record.getValues(), new HashMap<>());
+        values.remove(key);
+
+        jsonBin.updateBin(new EnvRecord(values), env.getExternalId());
+    }
 }

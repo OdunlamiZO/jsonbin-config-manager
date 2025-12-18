@@ -32,6 +32,12 @@ module.exports = {
         "red-bg-hover": "#fecaca",
         "red-text-hover": "#b91c1c",
         "red-border-hover": "#ef4444",
+        "purple-bg": "#ede9fe",
+        "purple-text": "#6d28d9",
+        "purple-border": "#a78bfa",
+        "purple-bg-hover": "#ddd6fe",
+        "purple-text-hover": "#7c3aed",
+        "purple-border-hover": "#8b5cf6",
       },
     },
     screens: {
