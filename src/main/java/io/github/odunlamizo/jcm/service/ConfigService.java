@@ -10,4 +10,6 @@ public interface ConfigService {
     List<Project> getAllProjects();
 
     void addVariable(int projectId, int envId, String key, String value);
+
+    void deleteVariable(int projectId, int envId, String key);
 }

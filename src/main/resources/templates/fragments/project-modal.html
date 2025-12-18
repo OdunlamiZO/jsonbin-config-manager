@@ -96,25 +96,31 @@
   </div>
 
   <script>
+    // Opens the project modal by making it visible and applying flex layout
     function openCreateProjectModal() {
       const modal = document.getElementById("project-modal");
       modal.classList.remove("hidden");
       modal.classList.add("flex");
     }
 
+    // Closes the project modal by hiding it and removing flex layout
     function closeProjectModal() {
       const modal = document.getElementById("project-modal");
       modal.classList.add("hidden");
       modal.classList.remove("flex");
     }
 
+    // Toggles the visibility of the advanced options section and updates the toggle icon
     function toggleAdvancedOptions() {
       const panel = document.getElementById("advanced-options");
       const icon = document.getElementById("advanced-toggle-icon");
 
+      // Check if the advanced options panel is currently hidden
       const isHidden = panel.classList.contains("hidden");
 
+      // Show or hide the panel based on its current state
       panel.classList.toggle("hidden", !isHidden);
+      // Update the icon to indicate expanded/collapsed state
       icon.textContent = isHidden ? "▾" : "▸";
     }
   </script>
