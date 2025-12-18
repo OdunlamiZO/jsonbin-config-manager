@@ -1,7 +1,8 @@
-package io.github.odunlamizo.service;
+package io.github.odunlamizo.jcm.service;
 
-import io.github.odunlamizo.model.User;
-import io.github.odunlamizo.repository.UserRepository;
+import io.github.odunlamizo.jcm.model.User;
+import io.github.odunlamizo.jcm.repository.UserRepository;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,8 +17,8 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void updatePassword(String currentPassword, String newPassword, String confirmPassword) {
-        if (newPassword == null || newPassword.isBlank()) {
+    public void changePassword(String currentPassword, String newPassword, String confirmPassword) {
+        if (Objects.isNull(newPassword) || newPassword.isBlank()) {
             throw new IllegalArgumentException("New password cannot be empty");
         }
 

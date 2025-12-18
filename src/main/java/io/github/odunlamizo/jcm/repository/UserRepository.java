@@ -1,6 +1,6 @@
-package io.github.odunlamizo.repository;
+package io.github.odunlamizo.jcm.repository;
 
-import io.github.odunlamizo.model.User;
+import io.github.odunlamizo.jcm.model.User;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 

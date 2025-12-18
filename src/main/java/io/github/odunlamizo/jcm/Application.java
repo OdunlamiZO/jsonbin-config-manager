@@ -1,4 +1,4 @@
-package io.github.odunlamizo;
+package io.github.odunlamizo.jcm;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

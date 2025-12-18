@@ -1,7 +1,7 @@
-package io.github.odunlamizo.config;
+package io.github.odunlamizo.jcm.config;
 
-import io.github.odunlamizo.model.User;
-import io.github.odunlamizo.repository.UserRepository;
+import io.github.odunlamizo.jcm.model.User;
+import io.github.odunlamizo.jcm.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -61,7 +61,7 @@ public class SecurityConfig {
             User user =
                     userRepository
                             .findByEmail(username)
-                            .orElseThrow(() -> new UsernameNotFoundException("user not found"));
+                            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
             return org.springframework.security.core.userdetails.User.builder()
                     .username(user.getEmail())

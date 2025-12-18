@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>JSONBin Config Manager - Error</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/application.css}" />
+  </head>
+
+  <body
+    class="poppins-regular bg-primary-light min-h-screen flex items-center justify-center"
+  >
+    <div
+      class="flex flex-col items-center w-full max-w-md sm:max-w-lg text-center p-6 sm:p-8 bg-primary-lighter rounded-2xl shadow-md"
+    >
+      <div class="mb-4 text-red-text">
+        <svg
+          class="w-20 h-20 sm:w-24 sm:h-24"
+          fill="currentColor"
+          viewBox="0 0 512 512"
+        >
+          <circle cx="256" cy="256" r="256" />
+          <line
+            x1="160"
+            y1="160"
+            x2="352"
+            y2="352"
+            stroke="white"
+            stroke-width="28"
+            stroke-linecap="round"
+          />
+          <line
+            x1="352"
+            y1="160"
+            x2="160"
+            y2="352"
+            stroke="white"
+            stroke-width="28"
+            stroke-linecap="round"
+          />
+        </svg>
+      </div>
+
+      <h1 class="text-xl sm:text-2xl font-semibold text-primary-dark">
+        <span th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|"
+          >500 Internal Server Error</span
+        >
+      </h1>
+
+      <p class="mt-2 sm:mt-4 text-sm sm:text-base text-primary-base">
+        An unexpected error occurred. Please try again later.
+      </p>
+
+      <div
+        class="mt-3 sm:mt-4 rounded-lg bg-primary-light border border-primary-base p-3 w-full text-left"
+      >
+        <p class="text-xs sm:text-sm font-medium text-primary-dark">
+          Error Details:
+        </p>
+        <code
+          class="block mt-1 text-xs sm:text-sm text-primary-base"
+          th:utext="${errorMessage}"
+        >
+          errorMessage: An unexpected error occurred.
+        </code>
+      </div>
+
+      <div
+        class="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 w-full"
+      >
+        <a
+          th:href="@{/dashboard}"
+          class="flex w-full sm:w-auto items-center justify-center rounded-lg h-10 sm:h-12 px-4 sm:px-5 bg-primary-base text-primary-light font-semibold text-sm sm:text-base hover:bg-primary-mid hover:text-primary-dark transition-colors"
+        >
+          Back to Dashboard
+        </a>
+      </div>
+    </div>
+  </body>
+</html>
