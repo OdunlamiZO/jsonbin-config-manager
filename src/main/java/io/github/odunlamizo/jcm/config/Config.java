@@ -5,6 +5,7 @@ import io.github.odunlamizo.jcm.model.User;
 import io.github.odunlamizo.jcm.repository.UserRepository;
 import io.github.odunlamizo.jsonbin.JsonBin;
 import io.github.odunlamizo.jsonbin.okhttp.JsonBinOkHttp;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +18,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @RequiredArgsConstructor
 public class Config {
+
+    @Value("${application.admin.name}")
+    private String adminName;
 
     @Value("${application.admin.email}")
     private String adminEmail;
@@ -35,8 +39,10 @@ public class Config {
             if (repository.count() == 0) {
                 repository.save(
                         User.builder()
+                                .name(adminName)
                                 .email(adminEmail)
                                 .password(passwordEncoder.encode(adminPassword))
+                                .lastSeen(LocalDateTime.now())
                                 .role(Role.ADMIN)
                                 .build());
 

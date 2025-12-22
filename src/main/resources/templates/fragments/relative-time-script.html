@@ -1,0 +1,23 @@
+<th:block th:fragment="relativeTimeScript">
+  <script src="https://unpkg.com/dayjs/dayjs.min.js"></script>
+  <script src="https://unpkg.com/dayjs/plugin/relativeTime.js"></script>
+  <script th:inline="javascript">
+    dayjs.extend(dayjs_plugin_relativeTime);
+
+    function updateRelativeDates(selector = ".relative-date") {
+      const elements = document.querySelectorAll(selector);
+      elements.forEach((el) => {
+        const isoDate = el.dataset.createdAt;
+        if (isoDate) {
+          el.textContent = dayjs(isoDate).fromNow();
+        }
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      updateRelativeDates();
+    });
+
+    window.updateRelativeDates = updateRelativeDates;
+  </script>
+</th:block>

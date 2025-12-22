@@ -20,19 +20,10 @@
             class="flex items-center gap-2 rounded-lg bg-primary-dark px-4 py-2 text-sm font-semibold text-white transition-opacity hover:bg-primary-base"
             onclick="openCreateProjectModal()"
           >
-            <svg
-              class="h-4 w-4 text-white -translate-x-1"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
+            <span
+              class="material-symbols-outlined text-white text-[18px] -translate-x-1"
+              >add</span
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M12 4v16m8-8H4"
-              />
-            </svg>
             New Project
           </button>
         </div>
@@ -41,26 +32,14 @@
           th:if="${#lists.isEmpty(projects)}"
           class="mt-52 flex flex-col items-center justify-center text-primary-base"
         >
-          <svg
-            class="h-12 w-12 mb-3 text-primary-mid"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            viewBox="0 0 24 24"
+          <span
+            class="material-symbols-outlined text-primary-mid text-[48px] mb-3"
+            >folder_open</span
           >
-            <circle cx="12" cy="12" r="10" stroke-dasharray="4 2" />
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M8 12h8M12 8v8"
-            />
-          </svg>
           <span class="text-base"
             >No projects found. Click <b>New Project</b> to get started.</span
           >
         </div>
-
-        <div th:else class="flex flex-col"></div>
 
         <div th:else class="flex flex-col gap-8">
           <div
@@ -139,7 +118,11 @@
                         class="px-2 py-1 w-16 rounded bg-red-bg text-red-text border border-red-border text-xs font-semibold hover:bg-red-bg-hover hover:text-red-text-hover hover:border-red-border-hover transition-colors"
                         th:data-action-url="@{/project/{projectId}/env/{envId}/variable/{key}/delete(projectId=${project.id},envId=${env.id},key=${keyStat.key})}"
                         th:data-key="${keyStat.key}"
-                        onclick="openDeleteVariableModalFromBtn(this)"
+                        onclick="openDeleteConfirmModal({
+                          actionUrl: this.dataset.actionUrl,
+                          title: 'Delete Variable',
+                          message: 'Are you sure you want to delete the variable <span class=\'font-semibold\'>' + this.dataset.key + '</span>? This action cannot be undone.'
+                        })"
                       >
                         Delete
                       </button>
@@ -267,7 +250,7 @@
       <div th:replace="fragments/project-modal :: projectModal"></div>
 
       <div
-        th:replace="fragments/delete-variable-modal :: deleteVariableModal"
+        th:replace="fragments/delete-confirm-modal :: deleteConfirmModal"
       ></div>
 
       <div th:replace="fragments/footer :: footer"></div>

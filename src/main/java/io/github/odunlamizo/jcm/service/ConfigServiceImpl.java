@@ -30,6 +30,10 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     @Transactional
     public void createProject(String name, String description, String collectionId) {
+        if (Objects.isNull(name) || name.isBlank()) {
+            throw new IllegalArgumentException("Project name is required");
+        }
+
         Bin<String> collectionBin;
         if (Objects.nonNull(collectionId)) {
             collectionBin = jsonBin.updateCollection(collectionId, name);

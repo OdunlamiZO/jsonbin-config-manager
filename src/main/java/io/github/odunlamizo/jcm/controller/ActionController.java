@@ -1,7 +1,9 @@
 package io.github.odunlamizo.jcm.controller;
 
+import io.github.odunlamizo.jcm.model.Role;
 import io.github.odunlamizo.jcm.service.ConfigService;
 import io.github.odunlamizo.jcm.service.UserService;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,8 +39,14 @@ public class ActionController {
     public String createProject(
             @RequestParam String name,
             @RequestParam(required = false) String description,
-            @RequestParam(required = false) String collectionId) {
-        configService.createProject(name, description, collectionId);
+            @RequestParam(required = false) String collectionId,
+            RedirectAttributes redirectAttributes) {
+        try {
+            configService.createProject(name, description, collectionId);
+            redirectAttributes.addFlashAttribute("success", "Project created successfully.");
+        } catch (IllegalArgumentException ex) {
+            redirectAttributes.addFlashAttribute("error", ex.getMessage());
+        }
 
         return "redirect:/dashboard";
     }
@@ -60,5 +68,41 @@ public class ActionController {
         configService.deleteVariable(projectId, envId, key);
 
         return "redirect:/dashboard";
+    }
+
+    @PostMapping("/user/add")
+    public String addUser(
+            @RequestParam String name,
+            @RequestParam String email,
+            @RequestParam String password,
+            @RequestParam(required = false) String role,
+            RedirectAttributes redirectAttributes) {
+        Role roleEnum = Role.VIEWER;
+        if (Objects.nonNull(role) && !role.isBlank()) {
+            try {
+                roleEnum = Role.valueOf(role.toUpperCase());
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+        try {
+            userService.addUser(name, email, password, roleEnum);
+            redirectAttributes.addFlashAttribute("success", "User added successfully.");
+        } catch (IllegalArgumentException ex) {
+            redirectAttributes.addFlashAttribute("error", ex.getMessage());
+        }
+
+        return "redirect:/user";
+    }
+
+    @PostMapping("/user/{userId}/delete")
+    public String deleteUser(@PathVariable int userId, RedirectAttributes redirectAttributes) {
+        try {
+            userService.deleteUser(userId);
+            redirectAttributes.addFlashAttribute("success", "User deleted successfully.");
+        } catch (IllegalStateException | IllegalArgumentException ex) {
+            redirectAttributes.addFlashAttribute("error", ex.getMessage());
+        }
+
+        return "redirect:/user";
     }
 }

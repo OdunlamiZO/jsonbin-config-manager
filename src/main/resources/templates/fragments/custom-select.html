@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:fragment="customSelect(id, name, label, options, selectedValue)"
+>
+  <div class="relative w-full space-y-3">
+    <label
+      th:for="${id}"
+      class="block text-sm font-medium text-primary-base mb-1"
+      th:text="${label}"
+    ></label>
+
+    <button
+      type="button"
+      th:id="${id} + '-button'"
+      class="w-full border border-primary-dark rounded px-3 py-2 text-left text-sm text-primary-dark bg-white focus:outline-none focus:border-primary-base focus:ring-1 focus:ring-primary-base flex justify-between items-center shadow-sm hover:bg-primary-light transition-colors"
+      aria-haspopup="listbox"
+      aria-expanded="false"
+    >
+      <span
+        th:text="${selectedValue != null ? options[selectedValue.name()] : '-- No Select --'}"
+      ></span>
+
+      <svg
+        class="ml-2 h-5 w-5 text-primary-dark"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M19 9l-7 7-7-7"
+        />
+      </svg>
+    </button>
+
+    <div
+      th:id="${id} + '-dropdown'"
+      class="hidden absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white border border-primary-dark shadow-xl"
+      role="listbox"
+      tabindex="-1"
+    >
+      <input
+        type="hidden"
+        th:name="${name}"
+        th:value="${selectedValue}"
+        th:id="${id + '-hidden-input'}"
+      />
+
+      <ul class="max-h-60 py-1 text-sm text-primary-dark">
+        <li
+          th:each="opt : ${options}"
+          class="cursor-pointer px-4 py-2 hover:bg-primary-dark hover:text-white text-center transition-colors"
+          th:text="${opt.value}"
+          th:attr="data-value=${opt.key}, data-label=${opt.value}, data-id=${id}"
+          role="option"
+          tabindex="0"
+        ></li>
+      </ul>
+    </div>
+
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+      document.addEventListener("DOMContentLoaded", function () {
+        const id = /*[[${id}]]*/ "select";
+
+        const button = document.getElementById(id + "-button");
+        const dropdown = document.getElementById(id + "-dropdown");
+
+        if (button && dropdown) {
+          button.addEventListener("click", function (e) {
+            e.preventDefault();
+            dropdown.classList.toggle("hidden");
+          });
+
+          document.addEventListener("click", function (e) {
+            const isClickInside =
+              button.contains(e.target) || dropdown.contains(e.target);
+            if (!isClickInside) {
+              dropdown.classList.add("hidden");
+            }
+          });
+        }
+
+        const options = dropdown.querySelectorAll("li");
+
+        options.forEach(function (option) {
+          option.addEventListener("click", function () {
+            const hiddenInput = document.getElementById(id + "-hidden-input");
+            const value = this.getAttribute("data-value");
+            const label = this.getAttribute("data-label");
+
+            if (hiddenInput) hiddenInput.value = value;
+            if (button) button.querySelector("span").textContent = label;
+
+            dropdown.classList.add("hidden");
+          });
+        });
+      });
+      /*]]>*/
+    </script>
+  </div>
+</html>
