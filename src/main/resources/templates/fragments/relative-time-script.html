@@ -2,8 +2,10 @@
   <script src="https://unpkg.com/dayjs/dayjs.min.js"></script>
   <script src="https://unpkg.com/dayjs/plugin/relativeTime.js"></script>
   <script th:inline="javascript">
+    // Extend dayjs with the relativeTime plugin
     dayjs.extend(dayjs_plugin_relativeTime);
 
+    // Update all elements with class .relative-date to show relative time
     function updateRelativeDates(selector = ".relative-date") {
       const elements = document.querySelectorAll(selector);
       elements.forEach((el) => {
@@ -14,6 +16,7 @@
       });
     }
 
+    // Run updateRelativeDates on page load
     document.addEventListener("DOMContentLoaded", function () {
       updateRelativeDates();
     });

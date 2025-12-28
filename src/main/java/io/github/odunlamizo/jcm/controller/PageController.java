@@ -1,7 +1,10 @@
 package io.github.odunlamizo.jcm.controller;
 
+import io.github.odunlamizo.jcm.model.Role;
 import io.github.odunlamizo.jcm.service.ConfigService;
 import io.github.odunlamizo.jcm.service.UserService;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -43,10 +46,10 @@ public class PageController {
         model.addAttribute("users", userService.getAllUsers());
 
         // Provide role options for the custom select (enum name -> label)
-        java.util.LinkedHashMap<String, String> roleOptions = new java.util.LinkedHashMap<>();
-        roleOptions.put("ADMIN", "Administrator");
-        roleOptions.put("EDITOR", "Editor");
-        roleOptions.put("VIEWER", "Viewer");
+        Map<String, String> roleOptions = new LinkedHashMap<>();
+        roleOptions.put(Role.ADMIN.name(), "Admin");
+        roleOptions.put(Role.EDITOR.name(), "Editor");
+        roleOptions.put(Role.VIEWER.name(), "Viewer");
         model.addAttribute("roleOptions", roleOptions);
 
         return "user";

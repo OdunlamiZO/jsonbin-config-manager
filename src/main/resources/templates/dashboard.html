@@ -181,16 +181,14 @@
                   </form>
 
                   <script>
+                    // Show the edit variable form and prefill with selected key/value
                     function openEditVariableForm(btn) {
-                      // Find the closest env section
                       const envSection = btn.closest(".flex-1");
                       if (!envSection) return;
-                      // Find the add/edit variable form in this env section
                       const form = envSection.querySelector(".variable-form");
                       if (!form) return;
-                      // Show the form
                       form.classList.remove("hidden");
-                      // Fill the form with the key and value
+                      // Prefill form fields with the selected variable's key and value
                       const keyInput = form.querySelector(
                         ".variable-key-input"
                       );
@@ -214,12 +212,13 @@
                       form.setAttribute("data-editing-key", editingKey);
                       // Focus value input for editing
                       valueInput.focus();
-                      // Hide the add variable button
+                      // Hide the add variable button while editing
                       const addBtn =
                         envSection.querySelector(".add-variable-btn");
                       if (addBtn) addBtn.style.display = "none";
                     }
 
+                    // Cancel editing a variable and restore previous state
                     function cancelEditVariable(cancelBtn) {
                       const form = cancelBtn.form;
                       const wrapper = form.closest("div[style]");

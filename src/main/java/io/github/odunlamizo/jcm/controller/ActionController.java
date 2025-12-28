@@ -39,14 +39,8 @@ public class ActionController {
     public String createProject(
             @RequestParam String name,
             @RequestParam(required = false) String description,
-            @RequestParam(required = false) String collectionId,
-            RedirectAttributes redirectAttributes) {
-        try {
-            configService.createProject(name, description, collectionId);
-            redirectAttributes.addFlashAttribute("success", "Project created successfully.");
-        } catch (IllegalArgumentException ex) {
-            redirectAttributes.addFlashAttribute("error", ex.getMessage());
-        }
+            @RequestParam(required = false) String collectionId) {
+        configService.createProject(name, description, collectionId);
 
         return "redirect:/dashboard";
     }
@@ -75,8 +69,7 @@ public class ActionController {
             @RequestParam String name,
             @RequestParam String email,
             @RequestParam String password,
-            @RequestParam(required = false) String role,
-            RedirectAttributes redirectAttributes) {
+            @RequestParam(required = false) String role) {
         Role roleEnum = Role.VIEWER;
         if (Objects.nonNull(role) && !role.isBlank()) {
             try {
@@ -84,24 +77,31 @@ public class ActionController {
             } catch (IllegalArgumentException ignored) {
             }
         }
-        try {
-            userService.addUser(name, email, password, roleEnum);
-            redirectAttributes.addFlashAttribute("success", "User added successfully.");
-        } catch (IllegalArgumentException ex) {
-            redirectAttributes.addFlashAttribute("error", ex.getMessage());
-        }
+        userService.addUser(name, email, password, roleEnum);
 
         return "redirect:/user";
     }
 
     @PostMapping("/user/{userId}/delete")
-    public String deleteUser(@PathVariable int userId, RedirectAttributes redirectAttributes) {
-        try {
-            userService.deleteUser(userId);
-            redirectAttributes.addFlashAttribute("success", "User deleted successfully.");
-        } catch (IllegalStateException | IllegalArgumentException ex) {
-            redirectAttributes.addFlashAttribute("error", ex.getMessage());
+    public String deleteUser(@PathVariable int userId) {
+        userService.deleteUser(userId);
+
+        return "redirect:/user";
+    }
+
+    @PostMapping("/user/{userId}/edit")
+    public String editUser(
+            @PathVariable int userId,
+            @RequestParam String name,
+            @RequestParam(required = false) String role) {
+        Role roleEnum = null;
+        if (Objects.nonNull(role) && !role.isBlank()) {
+            try {
+                roleEnum = Role.valueOf(role.toUpperCase());
+            } catch (IllegalArgumentException ignored) {
+            }
         }
+        userService.editUser(userId, name, roleEnum);
 
         return "redirect:/user";
     }

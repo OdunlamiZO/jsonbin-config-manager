@@ -52,27 +52,20 @@
   </div>
 
   <script>
-    // Opens the delete variable modal and sets the form action and variable key
+    // Show the delete variable modal and set the form action and variable key
     function openDeleteVariableModalFromBtn(btn) {
-      // Get modal, form, and key display elements
       const modal = document.getElementById("delete-variable-modal");
       const form = document.getElementById("delete-variable-form");
       const keySpan = document.getElementById("delete-variable-key");
-
-      // Set the form action URL and display the variable key to be deleted
       form.action = btn.dataset.actionUrl;
       keySpan.textContent = btn.dataset.key;
-
-      // Show the modal by updating its classes
       modal.classList.remove("hidden");
       modal.classList.add("flex");
     }
 
-    // Closes the delete variable modal
+    // Hide the delete variable modal
     function closeDeleteVariableModal() {
-      // Get the modal element
       const modal = document.getElementById("delete-variable-modal");
-      // Hide the modal by updating its classes
       modal.classList.add("hidden");
       modal.classList.remove("flex");
     }
