@@ -57,7 +57,7 @@
   </div>
 
   <script>
-    // Opens the generic delete modal and sets the form action, title, and message
+    // Show the generic delete confirmation modal and set its content
     function openDeleteConfirmModal({ actionUrl, title, message }) {
       const modal = document.getElementById("delete-confirm-modal");
       const form = document.getElementById("delete-confirm-form");
@@ -70,6 +70,7 @@
       modal.classList.add("flex");
     }
 
+    // Hide the generic delete confirmation modal
     function closeDeleteConfirmModal() {
       const modal = document.getElementById("delete-confirm-modal");
       modal.classList.add("hidden");

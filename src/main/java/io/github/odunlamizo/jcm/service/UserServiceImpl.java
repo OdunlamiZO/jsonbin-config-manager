@@ -3,7 +3,6 @@ package io.github.odunlamizo.jcm.service;
 import io.github.odunlamizo.jcm.model.Role;
 import io.github.odunlamizo.jcm.model.User;
 import io.github.odunlamizo.jcm.repository.UserRepository;
-import io.github.odunlamizo.todus.annotation.Todo;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -52,13 +51,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Todo(value = "Decide what to do with deleting ADMIN", assignee = "odunlamizo")
     public void deleteUser(int userId) {
         User user = userRepository.findById(userId).orElse(null);
         if (Objects.nonNull(user)) {
-            if (user.getRole() == Role.ADMIN) {
-                throw new IllegalStateException("Admin users cannot be deleted");
+            if (user.getRole() == Role.SUPER_ADMIN) {
+                throw new IllegalStateException("Super admin cannot be deleted");
             }
+
+            if (user.getRole() == Role.ADMIN) {
+                String actorEmail =
+                        SecurityContextHolder.getContext().getAuthentication().getName();
+                User actor = userRepository.findByEmail(actorEmail).orElseThrow();
+                if (actor.getRole() != Role.SUPER_ADMIN) {
+                    throw new IllegalStateException("Only the super admin can delete admin users");
+                }
+            }
+
             user.setDeletedAt(LocalDateTime.now());
             userRepository.save(user);
         }
@@ -78,7 +86,13 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Password is required");
         }
 
-        // Prevent duplicate active user with the same email
+        Role roleToAssign = Objects.nonNull(role) ? role : Role.VIEWER;
+
+        // Super admin is reserved for the initially bootstrapped user only
+        if (roleToAssign == Role.SUPER_ADMIN) {
+            throw new IllegalArgumentException("Super admin cannot be assigned");
+        }
+
         User existingActive = userRepository.findByEmailAndDeletedAtIsNull(email).orElse(null);
         if (Objects.nonNull(existingActive)) {
             throw new IllegalArgumentException("A user with this email already exists");
@@ -89,7 +103,7 @@ public class UserServiceImpl implements UserService {
         if (Objects.nonNull(existingInactive)) {
             existingInactive.setName(name);
             existingInactive.setPassword(passwordEncoder.encode(password));
-            existingInactive.setRole(Objects.nonNull(role) ? role : Role.VIEWER);
+            existingInactive.setRole(roleToAssign);
             existingInactive.setDeletedAt(null);
             existingInactive.setLastSeen(null);
             userRepository.save(existingInactive);
@@ -101,9 +115,44 @@ public class UserServiceImpl implements UserService {
                         .name(name)
                         .email(email)
                         .password(passwordEncoder.encode(password))
-                        .role(Objects.nonNull(role) ? role : Role.VIEWER)
+                        .role(roleToAssign)
                         .lastSeen(null)
                         .build();
+        userRepository.save(user);
+    }
+
+    @Override
+    public void editUser(int userId, String name, Role role) {
+        if (Objects.isNull(name) || name.isBlank()) {
+            throw new IllegalArgumentException("Name is required");
+        }
+
+        User user =
+                userRepository
+                        .findById(userId)
+                        .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        if (user.getRole() == Role.SUPER_ADMIN) {
+            throw new IllegalStateException("Super admin cannot be edited");
+        }
+
+        if (user.getRole() == Role.ADMIN) {
+            String actorEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+            User actor = userRepository.findByEmail(actorEmail).orElseThrow();
+            if (actor.getRole() != Role.SUPER_ADMIN) {
+                throw new IllegalStateException("Only the super admin can edit admin users");
+            }
+        }
+
+        Role roleToAssign = Objects.nonNull(role) ? role : user.getRole();
+
+        // Super admin is reserved for the initially bootstrapped user only
+        if (roleToAssign == Role.SUPER_ADMIN) {
+            throw new IllegalArgumentException("Super admin cannot be assigned");
+        }
+
+        user.setName(name);
+        user.setRole(roleToAssign);
         userRepository.save(user);
     }
 }

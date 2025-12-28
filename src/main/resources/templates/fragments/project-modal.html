@@ -103,6 +103,7 @@
   </div>
 
   <script>
+    // Validate the project form before submission
     function validateProjectForm() {
       let valid = true;
       const name = document.getElementById("project-name").value.trim();
@@ -117,29 +118,27 @@
       return valid;
     }
 
+    // Open the create project modal
     function openCreateProjectModal() {
       const modal = document.getElementById("project-modal");
       modal.classList.remove("hidden");
       modal.classList.add("flex");
     }
 
+    // Close the create project modal
     function closeProjectModal() {
       const modal = document.getElementById("project-modal");
       modal.classList.remove("flex");
       modal.classList.add("hidden");
     }
 
+    // Toggle the advanced options panel and update the icon
     function toggleAdvancedOptions() {
       const panel = document.getElementById("advanced-options");
       const icon = document.getElementById("advanced-toggle-icon");
-
-      // Check if the advanced options panel is currently hidden
       const isHidden = panel.classList.contains("hidden");
-
-      // Show or hide the panel based on its current state
       panel.classList.toggle("hidden", !isHidden);
-      // Update the icon to indicate expanded/collapsed state
-      icon.textContent = isHidden ? "▾" : "▸";
+      icon.textContent = isHidden ? "\u25be" : "\u25b8";
     }
   </script>
 </html>

@@ -43,10 +43,10 @@ public class Config {
                                 .email(adminEmail)
                                 .password(passwordEncoder.encode(adminPassword))
                                 .lastSeen(LocalDateTime.now())
-                                .role(Role.ADMIN)
+                                .role(Role.SUPER_ADMIN)
                                 .build());
 
-                log.info("🌱 Default admin user created: {}", adminEmail);
+                log.info("🌱 Default super admin user created: {}", adminEmail);
             }
         };
     }

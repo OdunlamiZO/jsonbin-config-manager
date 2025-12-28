@@ -64,18 +64,18 @@
 
     <script th:inline="javascript">
       /*<![CDATA[*/
+      // Initialize custom select dropdown behavior on page load
       document.addEventListener("DOMContentLoaded", function () {
         const id = /*[[${id}]]*/ "select";
-
         const button = document.getElementById(id + "-button");
         const dropdown = document.getElementById(id + "-dropdown");
-
         if (button && dropdown) {
+          // Toggle dropdown visibility on button click
           button.addEventListener("click", function (e) {
             e.preventDefault();
             dropdown.classList.toggle("hidden");
           });
-
+          // Hide dropdown when clicking outside
           document.addEventListener("click", function (e) {
             const isClickInside =
               button.contains(e.target) || dropdown.contains(e.target);
@@ -84,18 +84,15 @@
             }
           });
         }
-
+        // Handle option selection
         const options = dropdown.querySelectorAll("li");
-
         options.forEach(function (option) {
           option.addEventListener("click", function () {
             const hiddenInput = document.getElementById(id + "-hidden-input");
             const value = this.getAttribute("data-value");
             const label = this.getAttribute("data-label");
-
             if (hiddenInput) hiddenInput.value = value;
             if (button) button.querySelector("span").textContent = label;
-
             dropdown.classList.add("hidden");
           });
         });

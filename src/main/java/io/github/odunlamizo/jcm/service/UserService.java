@@ -13,4 +13,6 @@ public interface UserService {
     void deleteUser(int userId);
 
     void addUser(String name, String email, String password, Role role);
+
+    void editUser(int userId, String name, Role role);
 }
