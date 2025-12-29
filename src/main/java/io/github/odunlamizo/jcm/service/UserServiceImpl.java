@@ -50,10 +50,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<User> getUsers(int page, int size, String search, Role role) {
         Page<User> userPage;
-        if ((search == null || search.isBlank()) && role == null) {
+        if ((Objects.isNull(search) || search.isBlank()) && Objects.isNull(role)) {
             userPage = userRepository.findAllByDeletedAtIsNull(PageRequest.of(page, size));
         } else {
-            String term = (search != null && !search.isBlank()) ? search.trim() : "";
+            String term = (Objects.nonNull(search) && !search.isBlank()) ? search.trim() : "";
             userPage = userRepository.searchActive(term, role, PageRequest.of(page, size));
         }
         userPage.forEach(user -> user.setPassword(null));
@@ -126,7 +126,6 @@ public class UserServiceImpl implements UserService {
                         .email(email)
                         .password(passwordEncoder.encode(password))
                         .role(roleToAssign)
-                        .lastSeen(null)
                         .build();
         userRepository.save(user);
     }
