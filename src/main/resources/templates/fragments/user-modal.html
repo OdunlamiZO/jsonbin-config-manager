@@ -65,7 +65,7 @@
 
         <div class="mb-4 space-y-1">
           <div
-            th:replace="fragments/custom-select :: customSelect('user-role', 'role', 'Role', ${roleOptions}, null)"
+            th:replace="fragments/custom-select :: customSelect('user-role', 'role', 'Role', ${roleOptions}, null, false)"
           ></div>
         </div>
 
@@ -103,7 +103,7 @@
     </div>
 
     <script>
-      // Validate the user form fields before submission
+      // Validate form
       function validateUserForm() {
         let valid = true;
         // Validate name field

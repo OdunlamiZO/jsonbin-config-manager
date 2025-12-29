@@ -4,9 +4,10 @@ import io.github.odunlamizo.jcm.model.Role;
 import io.github.odunlamizo.jcm.model.User;
 import io.github.odunlamizo.jcm.repository.UserRepository;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -42,12 +43,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
-        List<User> users = userRepository.findAllByDeletedAtIsNull();
-        // Ensure passwords are not exposed when returning users
-        users.forEach(user -> user.setPassword(null));
+    public Page<User> getUsers(int page, int size) {
+        return getUsers(page, size, null, null);
+    }
 
-        return users;
+    @Override
+    public Page<User> getUsers(int page, int size, String search, Role role) {
+        Page<User> userPage;
+        if ((search == null || search.isBlank()) && role == null) {
+            userPage = userRepository.findAllByDeletedAtIsNull(PageRequest.of(page, size));
+        } else {
+            String term = (search != null && !search.isBlank()) ? search.trim() : "";
+            userPage = userRepository.searchActive(term, role, PageRequest.of(page, size));
+        }
+        userPage.forEach(user -> user.setPassword(null));
+        return userPage;
     }
 
     @Override
