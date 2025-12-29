@@ -68,7 +68,7 @@ public class ActionController {
     public String addUser(
             @RequestParam String name,
             @RequestParam String email,
-            @RequestParam String password,
+            @RequestParam(required = false) String password,
             @RequestParam(required = false) String role) {
         Role roleEnum = Role.VIEWER;
         if (Objects.nonNull(role) && !role.isBlank()) {

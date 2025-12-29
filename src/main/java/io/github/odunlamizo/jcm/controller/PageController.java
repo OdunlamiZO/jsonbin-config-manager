@@ -3,6 +3,7 @@ package io.github.odunlamizo.jcm.controller;
 import io.github.odunlamizo.jcm.model.Role;
 import io.github.odunlamizo.jcm.model.User;
 import io.github.odunlamizo.jcm.service.ConfigService;
+import io.github.odunlamizo.jcm.service.MailService;
 import io.github.odunlamizo.jcm.service.UserService;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class PageController {
 
     private final UserService userService;
+
+    private final MailService mailService;
 
     private final ConfigService configService;
 
@@ -78,6 +81,8 @@ public class PageController {
         model.addAttribute("search", search);
         // Default role to '' (All Roles)
         model.addAttribute("role", Objects.nonNull(role) ? role : "");
+
+        model.addAttribute("smtpEnabled", mailService.isSmtpEnabled());
 
         return "user";
     }
