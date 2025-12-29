@@ -17,8 +17,9 @@
           <span class="text-lg font-semibold">Projects</span>
 
           <button
-            class="flex items-center gap-2 rounded-lg bg-primary-dark px-4 py-2 text-sm font-semibold text-white transition-opacity hover:bg-primary-base"
+            class="flex items-center gap-2 rounded-lg bg-primary-dark px-4 py-2 text-sm font-semibold text-white transition-opacity hover:bg-primary-base disabled:opacity-50 disabled:cursor-not-allowed"
             onclick="openCreateProjectModal()"
+            th:disabled="${!#authorization.expression('hasAnyRole(''ADMIN'',''SUPER_ADMIN'',''EDITOR'')')}"
           >
             <span
               class="material-symbols-outlined text-white text-[18px] -translate-x-1"
@@ -105,17 +106,18 @@
 
                       <button
                         type="button"
-                        class="px-2 py-1 w-16 rounded bg-purple-bg text-purple-text border border-purple-border text-xs font-semibold hover:bg-purple-bg-hover hover:text-purple-text-hover hover:border-purple-border-hover transition-colors"
+                        class="px-2 py-1 w-16 rounded bg-purple-bg text-purple-text border border-purple-border text-xs font-semibold hover:bg-purple-bg-hover hover:text-purple-text-hover hover:border-purple-border-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         onclick="openEditVariableForm(this)"
                         th:data-key="${keyStat.key}"
                         th:data-value="${keyStat.value}"
+                        th:disabled="${!#authorization.expression('hasAnyRole(''ADMIN'',''SUPER_ADMIN'',''EDITOR'')')}"
                       >
                         Edit
                       </button>
 
                       <button
                         type="button"
-                        class="px-2 py-1 w-16 rounded bg-red-bg text-red-text border border-red-border text-xs font-semibold hover:bg-red-bg-hover hover:text-red-text-hover hover:border-red-border-hover transition-colors"
+                        class="px-2 py-1 w-16 rounded bg-red-bg text-red-text border border-red-border text-xs font-semibold hover:bg-red-bg-hover hover:text-red-text-hover hover:border-red-border-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         th:data-action-url="@{/project/{projectId}/env/{envId}/variable/{key}/delete(projectId=${project.id},envId=${env.id},key=${keyStat.key})}"
                         th:data-key="${keyStat.key}"
                         onclick="openDeleteConfirmModal({
@@ -123,6 +125,7 @@
                           title: 'Delete Variable',
                           message: 'Are you sure you want to delete the variable <span class=\'font-semibold\'>' + this.dataset.key + '</span>? This action cannot be undone.'
                         })"
+                        th:disabled="${!#authorization.expression('hasAnyRole(''ADMIN'',''SUPER_ADMIN'',''EDITOR'')')}"
                       >
                         Delete
                       </button>
@@ -133,8 +136,9 @@
                 <div class="mt-3 w-full" style="position: relative">
                   <button
                     type="button"
-                    class="add-variable-btn w-full flex items-center justify-center rounded border border-primary-mid bg-white px-4 py-1 text-sm font-semibold text-primary-dark hover:bg-primary-light hover:border-primary-base transition-colors"
+                    class="add-variable-btn w-full flex items-center justify-center rounded border border-primary-mid bg-white px-4 py-1 text-sm font-semibold text-primary-dark hover:bg-primary-light hover:border-primary-base transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     onclick="this.style.display='none'; const form = this.nextElementSibling; form.classList.remove('hidden'); form.querySelector('input[name=key]').focus();"
+                    th:disabled="${!#authorization.expression('hasAnyRole(''ADMIN'',''SUPER_ADMIN'',''EDITOR'')')}"
                   >
                     Add Variable
                   </button>
@@ -143,6 +147,7 @@
                     class="mt-2 flex-col space-y-2 hidden variable-form"
                     th:action="@{/project/{projectId}/env/{envId}/variable(projectId=${project.id},envId=${env.id})}"
                     method="post"
+                    th:if="${#authorization.expression('hasAnyRole(''ADMIN'',''SUPER_ADMIN'',''EDITOR'')')}"
                   >
                     <div class="flex gap-2 variable-form-fields">
                       <input

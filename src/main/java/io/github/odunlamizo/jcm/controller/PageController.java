@@ -51,7 +51,7 @@ public class PageController {
             @RequestParam(value = "search", required = false) String search,
             @RequestParam(value = "role", required = false) String role) {
         Role roleEnum = null;
-        if (role != null && !role.isBlank()) {
+        if (Objects.nonNull(role) && !role.isBlank()) {
             try {
                 roleEnum = Role.valueOf(role.toUpperCase());
             } catch (IllegalArgumentException ignored) {
@@ -77,7 +77,7 @@ public class PageController {
 
         model.addAttribute("search", search);
         // Default role to '' (All Roles)
-        model.addAttribute("role", role != null ? role : "");
+        model.addAttribute("role", Objects.nonNull(role) ? role : "");
 
         return "user";
     }

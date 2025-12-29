@@ -49,6 +49,8 @@ public class SecurityConfig {
                                         .permitAll()
                                         .requestMatchers(HttpMethod.POST, "/user/**")
                                         .hasAnyRole("SUPER_ADMIN", "ADMIN")
+                                        .requestMatchers(HttpMethod.POST, "/project/**")
+                                        .hasAnyRole("SUPER_ADMIN", "ADMIN", "EDITOR")
                                         .anyRequest()
                                         .authenticated())
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
