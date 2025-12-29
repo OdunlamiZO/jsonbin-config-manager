@@ -3,6 +3,7 @@ package io.github.odunlamizo.jcm.service;
 import io.github.odunlamizo.jcm.model.Role;
 import io.github.odunlamizo.jcm.model.User;
 import io.github.odunlamizo.jcm.repository.UserRepository;
+import io.github.odunlamizo.jcm.util.PasswordGenerator;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
@@ -16,9 +17,13 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    private final MailService mailService;
+
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
+
+    private final PasswordGenerator passwordGenerator;
 
     @Override
     public void changePassword(String currentPassword, String newPassword, String confirmPassword) {
@@ -92,7 +97,10 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Email is required");
         }
 
-        if (Objects.isNull(password) || password.isBlank()) {
+        boolean smtpEnabled = mailService.isSmtpEnabled();
+        String finalPassword = smtpEnabled ? passwordGenerator.generate() : password;
+
+        if (Objects.isNull(finalPassword) || finalPassword.isBlank()) {
             throw new IllegalArgumentException("Password is required");
         }
 
@@ -112,22 +120,25 @@ public class UserServiceImpl implements UserService {
         User existingInactive = userRepository.findByEmail(email).orElse(null);
         if (Objects.nonNull(existingInactive)) {
             existingInactive.setName(name);
-            existingInactive.setPassword(passwordEncoder.encode(password));
+            existingInactive.setPassword(passwordEncoder.encode(finalPassword));
             existingInactive.setRole(roleToAssign);
             existingInactive.setDeletedAt(null);
             existingInactive.setLastSeen(null);
             userRepository.save(existingInactive);
-            return;
+        } else {
+            User user =
+                    User.builder()
+                            .name(name)
+                            .email(email)
+                            .password(passwordEncoder.encode(finalPassword))
+                            .role(roleToAssign)
+                            .build();
+            userRepository.save(user);
         }
 
-        User user =
-                User.builder()
-                        .name(name)
-                        .email(email)
-                        .password(passwordEncoder.encode(password))
-                        .role(roleToAssign)
-                        .build();
-        userRepository.save(user);
+        if (smtpEnabled) {
+            mailService.sendUserCredentials(email, finalPassword);
+        }
     }
 
     @Override
