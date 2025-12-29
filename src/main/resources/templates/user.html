@@ -7,9 +7,9 @@
 
     <link rel="stylesheet" th:href="@{/css/application.css}" />
 
-    <div
+    <th:block
       th:replace="fragments/relative-time-script :: relativeTimeScript"
-    ></div>
+    ></th:block>
   </head>
 
   <body class="poppins-regular">
@@ -38,8 +38,22 @@
           </button>
         </div>
 
-        <div class="border border-primary-mid bg-white rounded-lg pt-16">
-          <table class="w-full border-collapse">
+        <div class="border border-primary-mid bg-white rounded-lg">
+          <div class="flex items-center justify-between px-5 py-3">
+            <!-- Search -->
+            <div
+              th:replace="fragments/search-form :: searchForm(@{'/user'(role=${role})}, ${search})"
+            ></div>
+
+            <!-- Role Filter -->
+            <form method="get" action="/user" class="flex items-center gap-2">
+              <div
+                th:insert="fragments/custom-select :: customSelect('roleFilter', 'role', null, ${roleFilterOptions}, ${role}, true)"
+              ></div>
+            </form>
+          </div>
+
+          <table class="w-full border-collapse border-b border-primary-mid">
             <thead class="bg-primary-light border-y border-primary-mid">
               <tr>
                 <th
@@ -159,19 +173,19 @@
                 </td>
 
                 <script>
-                  // Toggle the visibility of the options menu for a user row
+                  // Toggle row menu
                   function toggleOptionsMenu(btn) {
-                    // Hide all open menus first
+                    // Close other menus
                     document
                       .querySelectorAll("[data-options-menu]")
                       .forEach((menu) => menu.classList.add("hidden"));
-                    // Show or hide the menu for this button
+                    // Toggle this menu
                     const menu = btn.parentElement.querySelector(
                       "[data-options-menu]"
                     );
                     if (menu) menu.classList.toggle("hidden");
                   }
-                  // Hide any open options menu when clicking outside
+                  // Close menus on the outside click
                   document.addEventListener("click", function (event) {
                     const isOptionsBtn = event.target.closest(
                       'button[onclick="toggleOptionsMenu(this)"]'
@@ -187,6 +201,48 @@
               </tr>
             </tbody>
           </table>
+
+          <div
+            th:if="${userPage.totalPages > 0}"
+            class="flex items-center justify-center gap-4 px-5 py-4"
+          >
+            <a
+              th:if="${userPage.hasPrevious()}"
+              th:href="@{'/user'(page=${userPage.number - 1},size=${userPage.size})}"
+              class="text-primary-base text-lg px-3 py-1 border border-primary-base rounded bg-primary-lighter hover:bg-primary-light"
+              title="Previous page"
+            >
+              ←
+            </a>
+
+            <a
+              th:unless="${userPage.hasPrevious()}"
+              class="text-primary-dark text-lg px-3 py-1 border border-primary-dark rounded bg-primary-lighter cursor-not-allowed opacity-50"
+            >
+              ←
+            </a>
+
+            <span class="text-sm text-primary-base">
+              Page <span th:text="${userPage.number + 1}"></span> of
+              <span th:text="${userPage.totalPages}"></span>
+            </span>
+
+            <a
+              th:if="${userPage.hasNext()}"
+              th:href="@{'/user'(page=${userPage.number + 1},size=${userPage.size})}"
+              class="text-primary-base text-lg px-3 py-1 border border-primary-base rounded bg-primary-lighter hover:bg-primary-light"
+              title="Next page"
+            >
+              →
+            </a>
+
+            <a
+              th:unless="${userPage.hasNext()}"
+              class="text-primary-dark text-lg px-3 py-1 border border-primary-dark rounded bg-primary-lighter cursor-not-allowed opacity-50"
+            >
+              →
+            </a>
+          </div>
         </div>
       </div>
 

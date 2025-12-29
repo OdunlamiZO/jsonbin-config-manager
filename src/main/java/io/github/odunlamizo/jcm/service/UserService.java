@@ -2,13 +2,15 @@ package io.github.odunlamizo.jcm.service;
 
 import io.github.odunlamizo.jcm.model.Role;
 import io.github.odunlamizo.jcm.model.User;
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface UserService {
 
     void changePassword(String currentPassword, String newPassword, String confirmPassword);
 
-    List<User> getAllUsers();
+    Page<User> getUsers(int page, int size);
+
+    Page<User> getUsers(int page, int size, String search, Role role);
 
     void deleteUser(int userId);
 

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html
   xmlns:th="http://www.thymeleaf.org"
-  th:fragment="customSelect(id, name, label, options, selectedValue)"
+  th:fragment="customSelect(id, name, label, options, selectedKey, autoSubmit)"
 >
-  <div class="relative w-full space-y-3">
+  <div class="relative w-full min-w-[220px] space-y-3">
     <label
       th:for="${id}"
       class="block text-sm font-medium text-primary-base mb-1"
@@ -13,12 +13,12 @@
     <button
       type="button"
       th:id="${id} + '-button'"
-      class="w-full border border-primary-dark rounded px-3 py-2 text-left text-sm text-primary-dark bg-white focus:outline-none focus:border-primary-base focus:ring-1 focus:ring-primary-base flex justify-between items-center shadow-sm hover:bg-primary-light transition-colors"
+      class="w-full h-10 border border-primary-dark rounded px-3 py-2 text-left text-base text-primary-dark bg-white focus:outline-none focus:border-primary-base focus:ring-1 focus:ring-primary-base flex justify-between items-center shadow-sm hover:bg-primary-light transition-colors"
       aria-haspopup="listbox"
       aria-expanded="false"
     >
       <span
-        th:text="${selectedValue != null ? options[selectedValue.name()] : '-- No Select --'}"
+        th:text="${options != null ? ((selectedKey != null && options[selectedKey] != null) ? options[selectedKey] : (options[''] != null ? options[''] : '-- Select --')) : '-- Select --'}"
       ></span>
 
       <svg
@@ -46,14 +46,14 @@
       <input
         type="hidden"
         th:name="${name}"
-        th:value="${selectedValue}"
+        th:value="${selectedKey}"
         th:id="${id + '-hidden-input'}"
       />
 
-      <ul class="max-h-60 py-1 text-sm text-primary-dark">
+      <ul class="max-h-60 py-1 text-base text-primary-dark">
         <li
           th:each="opt : ${options}"
-          class="cursor-pointer px-4 py-2 hover:bg-primary-dark hover:text-white text-center transition-colors"
+          class="cursor-pointer px-4 py-2 hover:bg-primary-dark hover:text-white text-left transition-colors"
           th:text="${opt.value}"
           th:attr="data-value=${opt.key}, data-label=${opt.value}, data-id=${id}"
           role="option"
@@ -64,18 +64,19 @@
 
     <script th:inline="javascript">
       /*<![CDATA[*/
-      // Initialize custom select dropdown behavior on page load
       document.addEventListener("DOMContentLoaded", function () {
         const id = /*[[${id}]]*/ "select";
+        const autoSubmit = /*[[${autoSubmit}]]*/ false;
+
         const button = document.getElementById(id + "-button");
         const dropdown = document.getElementById(id + "-dropdown");
+
         if (button && dropdown) {
-          // Toggle dropdown visibility on button click
           button.addEventListener("click", function (e) {
             e.preventDefault();
             dropdown.classList.toggle("hidden");
           });
-          // Hide dropdown when clicking outside
+
           document.addEventListener("click", function (e) {
             const isClickInside =
               button.contains(e.target) || dropdown.contains(e.target);
@@ -84,16 +85,47 @@
             }
           });
         }
-        // Handle option selection
+
         const options = dropdown.querySelectorAll("li");
+        // Init label from current value on load
+        (function initSelectedLabel() {
+          const hiddenInput = document.getElementById(id + "-hidden-input");
+          if (!hiddenInput || !button) return;
+          const currentValue =
+            hiddenInput.value != null ? hiddenInput.value : "";
+          let found = false;
+          options.forEach(function (opt) {
+            if (!found && opt.getAttribute("data-value") === currentValue) {
+              const label = opt.getAttribute("data-label");
+              if (label) {
+                const span = button.querySelector("span");
+                if (span) span.textContent = label;
+              }
+              found = true;
+            }
+          });
+        })();
+
         options.forEach(function (option) {
           option.addEventListener("click", function () {
             const hiddenInput = document.getElementById(id + "-hidden-input");
             const value = this.getAttribute("data-value");
             const label = this.getAttribute("data-label");
+
             if (hiddenInput) hiddenInput.value = value;
-            if (button) button.querySelector("span").textContent = label;
+            if (button) {
+              const span = button.querySelector("span");
+              if (span) span.textContent = label;
+            }
+
             dropdown.classList.add("hidden");
+
+            if (autoSubmit) {
+              const form = button.closest("form");
+              if (form) {
+                form.submit();
+              }
+            }
           });
         });
       });
