@@ -1,6 +1,7 @@
 package io.github.odunlamizo.jcm.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.*;
 
@@ -27,4 +28,7 @@ public class Project {
 
     @Column(name = "external_id", nullable = false)
     private String externalId; // simply the collection id on JSONBIN.io
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 }

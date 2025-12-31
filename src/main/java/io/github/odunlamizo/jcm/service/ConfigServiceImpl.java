@@ -7,6 +7,7 @@ import io.github.odunlamizo.jcm.repository.EnvRepository;
 import io.github.odunlamizo.jcm.repository.ProjectRepository;
 import io.github.odunlamizo.jsonbin.JsonBin;
 import io.github.odunlamizo.jsonbin.model.Bin;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,8 +67,17 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     @Override
+    public void archiveProject(int projectId) {
+        Project project = projectRepository.findById(projectId).orElse(null);
+        if (Objects.nonNull(project)) {
+            project.setDeletedAt(LocalDateTime.now());
+            projectRepository.save(project);
+        }
+    }
+
+    @Override
     public List<Project> getAllProjects() {
-        List<Project> projects = projectRepository.findAll();
+        List<Project> projects = projectRepository.findAllByDeletedAtIsNull();
 
         for (Project project : projects) {
             for (Env env : project.getEnvs()) {

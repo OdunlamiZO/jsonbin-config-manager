@@ -45,6 +45,13 @@ public class ActionController {
         return "redirect:/dashboard";
     }
 
+    @PostMapping("/project/{projectId}/archive")
+    public String archiveProject(@PathVariable int projectId) {
+        configService.archiveProject(projectId);
+
+        return "redirect:/dashboard";
+    }
+
     @PostMapping("/project/{projectId}/env/{envId}/variable")
     public String addVariable(
             @PathVariable int projectId,
