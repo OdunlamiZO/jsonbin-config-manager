@@ -7,6 +7,8 @@ public interface ConfigService {
 
     void createProject(String name, String description, String collectionId);
 
+    void archiveProject(int projectId);
+
     List<Project> getAllProjects();
 
     void addVariable(int projectId, int envId, String key, String value);
