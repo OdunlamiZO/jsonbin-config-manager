@@ -31,8 +31,9 @@
               <span class="block text-primary-base">Role</span>
               <span
                 class="block"
-                th:text="${#authentication.principal?.authorities[0]?.authority == 'ROLE_ADMIN' ? 'Admin' : 
-                #authentication.principal?.authorities[0]?.authority == 'ROLE_EDITOR' ? 'Editor' : 
+                th:text="${#authentication.principal?.authorities[0]?.authority == 'ROLE_SUPER_ADMIN' ? 'Super Admin' :
+                #authentication.principal?.authorities[0]?.authority == 'ROLE_ADMIN' ? 'Admin' :
+                #authentication.principal?.authorities[0]?.authority == 'ROLE_EDITOR' ? 'Editor' :
                 #authentication.principal.principal?.authorities[0]?.authority == 'ROLE_VIEWER' ? 'Viewer' : 
                 'N/A'}"
               ></span>
