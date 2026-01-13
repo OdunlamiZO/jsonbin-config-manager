@@ -42,6 +42,7 @@ Thumbs.db
 
 # Environment files
 .env
+.github_credentials.env
 
 # Node.js (if applicable)
 node*/
