@@ -20,7 +20,7 @@ COPY pom.xml .
 # Copy Maven settings for private repos
 COPY settings.xml .m2/
 
-# Copy frontend files (so npm install works)
+# Copy frontend files
 COPY package.json package-lock.json copy-files.js postcss.config.js tailwind.config.js ./
 
 # Copy source code

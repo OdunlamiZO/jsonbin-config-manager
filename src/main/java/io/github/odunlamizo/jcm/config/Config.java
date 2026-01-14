@@ -5,7 +5,6 @@ import io.github.odunlamizo.jcm.model.User;
 import io.github.odunlamizo.jcm.repository.UserRepository;
 import io.github.odunlamizo.jsonbin.JsonBin;
 import io.github.odunlamizo.jsonbin.okhttp.JsonBinOkHttp;
-import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,11 +41,10 @@ public class Config {
                                 .name(adminName)
                                 .email(adminEmail)
                                 .password(passwordEncoder.encode(adminPassword))
-                                .lastSeen(LocalDateTime.now())
                                 .role(Role.SUPER_ADMIN)
                                 .build());
 
-                log.info("🌱 Default super admin user created: {}", adminEmail);
+                log.info("🌱 Default admin user created: {}", adminEmail);
             }
         };
     }
