@@ -1,12 +1,12 @@
 // @ts-nocheck
-var ncp = require("ncp").ncp;
-var fs = require("fs");
+var ncp = require('ncp').ncp;
+var fs = require('fs');
 
 ncp.limit = 16;
 
 ncp(
-  "./src/main/resources",
-  "target/classes",
+  './src/main/resources',
+  'target/classes',
   {
     filter: (source) => {
       if (fs.lstatSync(source).isDirectory()) {

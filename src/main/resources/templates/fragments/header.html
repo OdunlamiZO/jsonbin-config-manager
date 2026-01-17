@@ -95,17 +95,17 @@
     <script>
       // Toggle the visibility of the main navigation menu
       function toggleMenu() {
-        const menu = document.getElementById("main-menu");
-        menu.classList.toggle("hidden");
+        const menu = document.getElementById('main-menu');
+        menu.classList.toggle('hidden');
       }
 
       // Hide the menu when clicking outside of it
-      document.addEventListener("click", function (event) {
-        const menu = document.getElementById("main-menu");
+      document.addEventListener('click', function (event) {
+        const menu = document.getElementById('main-menu');
         const button = event.target.closest('button[onclick="toggleMenu()"]');
         const isMenu = menu.contains(event.target);
-        if (!menu.classList.contains("hidden") && !isMenu && !button) {
-          menu.classList.add("hidden");
+        if (!menu.classList.contains('hidden') && !isMenu && !button) {
+          menu.classList.add('hidden');
         }
       });
     </script>
