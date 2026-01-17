@@ -46,5 +46,30 @@ module.exports = {
       lg: "1024px", // Desktop
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addBase, theme }) {
+      addBase({
+        ":root": {
+          "--btn-primary-bg": theme("colors.red-bg"),
+          "--btn-primary-text": theme("colors.red-text"),
+          "--btn-primary-border": theme("colors.red-border"),
+
+          "--btn-secondary-bg": theme("colors.primary-light"),
+          "--btn-secondary-text": theme("colors.primary-dark"),
+          "--btn-secondary-border": theme("colors.primary-mid"),
+        },
+        "@media (prefers-color-scheme: dark)": {
+          ":root": {
+            "--btn-primary-bg": "#7f1d1d", // pull dark colors dynamically when it has been set in theme
+            "--btn-primary-text": "#fee2e2",
+            "--btn-primary-border": "#991b1b",
+
+            "--btn-secondary-bg": "#1e293b",
+            "--btn-secondary-text": "#f9fafb",
+            "--btn-secondary-border": "#334155",
+          },
+        },
+      });
+    },
+  ],
 };
