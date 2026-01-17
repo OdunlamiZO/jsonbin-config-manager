@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
     <title>JSONBin Config Manager - Dashboard</title>
@@ -219,10 +219,10 @@
                       form.classList.remove("hidden");
                       // Prefill form fields with the selected variable's key and value
                       const keyInput = form.querySelector(
-                        ".variable-key-input"
+                        ".variable-key-input",
                       );
                       const valueInput = form.querySelector(
-                        ".variable-value-input"
+                        ".variable-value-input",
                       );
                       const editingKey = btn.getAttribute("data-key");
                       keyInput.value = editingKey;
@@ -260,7 +260,7 @@
                         const envSection = form.closest(".flex-1");
                         if (envSection) {
                           const row = envSection.querySelector(
-                            '.variable-row[data-key="' + editingKey + '"]'
+                            '.variable-row[data-key="' + editingKey + '"]',
                           );
                           if (row) row.style.display = "";
                         }

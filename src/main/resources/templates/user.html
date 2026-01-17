@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
     <title>JSONBin Config Manager - User Management</title>
@@ -186,14 +186,14 @@
                       .forEach((menu) => menu.classList.add("hidden"));
                     // Toggle this menu
                     const menu = btn.parentElement.querySelector(
-                      "[data-options-menu]"
+                      "[data-options-menu]",
                     );
                     if (menu) menu.classList.toggle("hidden");
                   }
                   // Close menus on the outside click
                   document.addEventListener("click", function (event) {
                     const isOptionsBtn = event.target.closest(
-                      'button[onclick="toggleOptionsMenu(this)"]'
+                      'button[onclick="toggleOptionsMenu(this)"]',
                     );
                     const isMenu = event.target.closest("[data-options-menu]");
                     if (!isOptionsBtn && !isMenu) {
