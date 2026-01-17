@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html
   xmlns:th="http://www.thymeleaf.org"
   th:fragment="customSelect(id, name, label, options, selectedKey, autoSubmit)"
@@ -64,41 +64,41 @@
 
     <script th:inline="javascript">
       /*<![CDATA[*/
-      document.addEventListener("DOMContentLoaded", function () {
-        const id = /*[[${id}]]*/ "select";
+      document.addEventListener('DOMContentLoaded', function () {
+        const id = /*[[${id}]]*/ 'select';
         const autoSubmit = /*[[${autoSubmit}]]*/ false;
 
-        const button = document.getElementById(id + "-button");
-        const dropdown = document.getElementById(id + "-dropdown");
+        const button = document.getElementById(id + '-button');
+        const dropdown = document.getElementById(id + '-dropdown');
 
         if (button && dropdown) {
-          button.addEventListener("click", function (e) {
+          button.addEventListener('click', function (e) {
             e.preventDefault();
-            dropdown.classList.toggle("hidden");
+            dropdown.classList.toggle('hidden');
           });
 
-          document.addEventListener("click", function (e) {
+          document.addEventListener('click', function (e) {
             const isClickInside =
               button.contains(e.target) || dropdown.contains(e.target);
             if (!isClickInside) {
-              dropdown.classList.add("hidden");
+              dropdown.classList.add('hidden');
             }
           });
         }
 
-        const options = dropdown.querySelectorAll("li");
+        const options = dropdown.querySelectorAll('li');
         // Init label from current value on load
         (function initSelectedLabel() {
-          const hiddenInput = document.getElementById(id + "-hidden-input");
+          const hiddenInput = document.getElementById(id + '-hidden-input');
           if (!hiddenInput || !button) return;
           const currentValue =
-            hiddenInput.value != null ? hiddenInput.value : "";
+            hiddenInput.value != null ? hiddenInput.value : '';
           let found = false;
           options.forEach(function (opt) {
-            if (!found && opt.getAttribute("data-value") === currentValue) {
-              const label = opt.getAttribute("data-label");
+            if (!found && opt.getAttribute('data-value') === currentValue) {
+              const label = opt.getAttribute('data-label');
               if (label) {
-                const span = button.querySelector("span");
+                const span = button.querySelector('span');
                 if (span) span.textContent = label;
               }
               found = true;
@@ -107,21 +107,21 @@
         })();
 
         options.forEach(function (option) {
-          option.addEventListener("click", function () {
-            const hiddenInput = document.getElementById(id + "-hidden-input");
-            const value = this.getAttribute("data-value");
-            const label = this.getAttribute("data-label");
+          option.addEventListener('click', function () {
+            const hiddenInput = document.getElementById(id + '-hidden-input');
+            const value = this.getAttribute('data-value');
+            const label = this.getAttribute('data-label');
 
             if (hiddenInput) hiddenInput.value = value;
             if (button) {
-              const span = button.querySelector("span");
+              const span = button.querySelector('span');
               if (span) span.textContent = label;
             }
 
-            dropdown.classList.add("hidden");
+            dropdown.classList.add('hidden');
 
             if (autoSubmit) {
-              const form = button.closest("form");
+              const form = button.closest('form');
               if (form) {
                 form.submit();
               }

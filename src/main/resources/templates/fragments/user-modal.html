@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" th:fragment="userModal">
   <div
     id="user-modal"
@@ -25,7 +25,7 @@
         method="post"
         th:action="@{/user/add}"
         id="user-form"
-        onsubmit="return validateUserForm()"
+        onsubmit="return validateUserForm();"
       >
         <input
           type="hidden"
@@ -134,102 +134,102 @@
         let valid = true;
 
         // Validate name field
-        const name = document.getElementById("user-name").value.trim();
-        const nameError = document.getElementById("user-name-error");
+        const name = document.getElementById('user-name').value.trim();
+        const nameError = document.getElementById('user-name-error');
 
         if (!name) {
-          nameError.textContent = "Name is required.";
-          nameError.classList.remove("hidden");
+          nameError.textContent = 'Name is required.';
+          nameError.classList.remove('hidden');
           valid = false;
         } else {
-          nameError.classList.add("hidden");
+          nameError.classList.add('hidden');
         }
 
         // Validate email field and format
-        const email = document.getElementById("user-email").value.trim();
-        const emailError = document.getElementById("user-email-error");
+        const email = document.getElementById('user-email').value.trim();
+        const emailError = document.getElementById('user-email-error');
 
         if (!email) {
-          emailError.textContent = "Email is required.";
-          emailError.classList.remove("hidden");
+          emailError.textContent = 'Email is required.';
+          emailError.classList.remove('hidden');
           valid = false;
         } else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-          emailError.textContent = "Enter a valid email address.";
-          emailError.classList.remove("hidden");
+          emailError.textContent = 'Enter a valid email address.';
+          emailError.classList.remove('hidden');
           valid = false;
         } else {
-          emailError.classList.add("hidden");
+          emailError.classList.add('hidden');
         }
 
         // Only require password in add mode and smtp disabled
-        const form = document.getElementById("user-form");
-        const isAddMode = form && form.action.endsWith("/user/add");
+        const form = document.getElementById('user-form');
+        const isAddMode = form && form.action.endsWith('/user/add');
 
-        const passwordInput = document.getElementById("user-password");
-        const passwordError = document.getElementById("user-password-error");
+        const passwordInput = document.getElementById('user-password');
+        const passwordError = document.getElementById('user-password-error');
 
         if (isAddMode && passwordInput) {
           const password = passwordInput.value.trim();
           if (!password) {
-            passwordError.textContent = "Password is required.";
-            passwordError.classList.remove("hidden");
+            passwordError.textContent = 'Password is required.';
+            passwordError.classList.remove('hidden');
             valid = false;
           } else {
-            passwordError.classList.add("hidden");
+            passwordError.classList.add('hidden');
           }
         } else {
-          passwordError && passwordError.classList.add("hidden");
+          passwordError && passwordError.classList.add('hidden');
         }
 
         return valid;
       }
 
       function setCopyButtonVisible(visible) {
-        const btn = document.getElementById("copy-password-btn");
-        if (btn) btn.style.display = visible ? "" : "none";
+        const btn = document.getElementById('copy-password-btn');
+        if (btn) btn.style.display = visible ? '' : 'none';
       }
 
       // Generate a strong password and fill the field
       function generateUserPassword() {
-        const input = document.getElementById("user-password");
+        const input = document.getElementById('user-password');
         if (!input) return;
 
         const length = 14;
         const chars =
-          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{};:,.?";
-        let pwd = "";
+          'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{};:,.?';
+        let pwd = '';
         for (let i = 0; i < length; i++) {
           pwd += chars[Math.floor(Math.random() * chars.length)];
         }
 
         input.value = pwd;
-        input.type = "text";
+        input.type = 'text';
         input.focus();
         input.select();
 
         setCopyButtonVisible(true);
 
-        const error = document.getElementById("user-password-error");
-        error && error.classList.add("hidden");
+        const error = document.getElementById('user-password-error');
+        error && error.classList.add('hidden');
       }
 
       function copyUserPassword() {
-        const input = document.getElementById("user-password");
-        const btn = document.getElementById("copy-password-btn");
+        const input = document.getElementById('user-password');
+        const btn = document.getElementById('copy-password-btn');
         if (!input || !input.value || !btn) return;
 
         navigator.clipboard.writeText(input.value).then(() => {
           const original = btn.textContent;
 
-          btn.textContent = "Copied ✓";
-          btn.classList.add("bg-primary-base", "text-white");
+          btn.textContent = 'Copied ✓';
+          btn.classList.add('bg-primary-base', 'text-white');
 
           // Hide password after copy
-          input.type = "password";
+          input.type = 'password';
 
           setTimeout(() => {
             btn.textContent = original;
-            btn.classList.remove("bg-primary-base", "text-white");
+            btn.classList.remove('bg-primary-base', 'text-white');
 
             // Hide copy button after successful copy
             setCopyButtonVisible(false);
@@ -239,108 +239,108 @@
 
       // Open the modal in add user mode and reset all fields
       function openUserModal() {
-        const modal = document.getElementById("user-modal");
+        const modal = document.getElementById('user-modal');
 
-        modal.classList.remove("hidden");
-        modal.classList.add("flex");
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
 
-        modal.querySelector("h1").textContent = "Add New User";
-        modal.querySelector("p.text-sm").textContent =
-          "Fill in the details to create a new user account.";
+        modal.querySelector('h1').textContent = 'Add New User';
+        modal.querySelector('p.text-sm').textContent =
+          'Fill in the details to create a new user account.';
 
-        const form = document.getElementById("user-form");
-        form.action = "/user/add";
-        form.querySelector("button[type='submit']").textContent = "Add User";
+        const form = document.getElementById('user-form');
+        form.action = '/user/add';
+        form.querySelector("button[type='submit']").textContent = 'Add User';
 
         // Show password field in add mode
-        const passwordInput = document.getElementById("user-password");
+        const passwordInput = document.getElementById('user-password');
         if (passwordInput) {
-          const passwordField = passwordInput.closest(".mb-8");
-          passwordField && (passwordField.style.display = "");
+          const passwordField = passwordInput.closest('.mb-8');
+          passwordField && (passwordField.style.display = '');
         }
 
         form.reset();
         // Auto-generate password only if field exists
-        if (document.getElementById("user-password")) {
+        if (document.getElementById('user-password')) {
           generateUserPassword();
         }
       }
 
       // Open the modal in edit user mode and prefill fields
       function openEditUserModal(btn) {
-        const modal = document.getElementById("user-modal");
+        const modal = document.getElementById('user-modal');
 
-        modal.classList.remove("hidden");
-        modal.classList.add("flex");
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
 
-        modal.querySelector("h1").textContent = "Edit User";
-        modal.querySelector("p.text-sm").textContent =
+        modal.querySelector('h1').textContent = 'Edit User';
+        modal.querySelector('p.text-sm').textContent =
           "Update the user's role or name. Email cannot be changed.";
 
-        const form = document.getElementById("user-form");
-        form.action = "/user/" + btn.getAttribute("data-user-id") + "/edit";
-        form.querySelector("button[type='submit']").textContent = "Save";
+        const form = document.getElementById('user-form');
+        form.action = '/user/' + btn.getAttribute('data-user-id') + '/edit';
+        form.querySelector("button[type='submit']").textContent = 'Save';
 
         // Prefill name and email fields
-        const nameInput = document.getElementById("user-name");
-        const emailInput = document.getElementById("user-email");
-        nameInput.value = btn.getAttribute("data-user-name") || "";
-        emailInput.value = btn.getAttribute("data-user-email") || "";
+        const nameInput = document.getElementById('user-name');
+        const emailInput = document.getElementById('user-email');
+        nameInput.value = btn.getAttribute('data-user-name') || '';
+        emailInput.value = btn.getAttribute('data-user-email') || '';
 
         // Make email read-only in edit mode
         emailInput.readOnly = true;
 
         // Hide password field in edit mode
-        const passwordInput = document.getElementById("user-password");
+        const passwordInput = document.getElementById('user-password');
         if (passwordInput) {
-          const passwordField = passwordInput.closest(".mb-8");
-          passwordField && (passwordField.style.display = "none");
+          const passwordField = passwordInput.closest('.mb-8');
+          passwordField && (passwordField.style.display = 'none');
         }
 
         // Set role select to current value
-        const role = btn.getAttribute("data-user-role");
-        const roleInput = document.getElementById("user-role-hidden-input");
-        const roleButton = document.getElementById("user-role-button");
+        const role = btn.getAttribute('data-user-role');
+        const roleInput = document.getElementById('user-role-hidden-input');
+        const roleButton = document.getElementById('user-role-button');
         if (roleInput) roleInput.value = role;
         if (roleButton) {
           // Simulate click on correct dropdown option to update label and value
-          const dropdown = document.getElementById("user-role-dropdown");
+          const dropdown = document.getElementById('user-role-dropdown');
           if (dropdown) {
-            const options = dropdown.querySelectorAll("li[data-value]");
+            const options = dropdown.querySelectorAll('li[data-value]');
             options.forEach(function (option) {
-              if (option.getAttribute("data-value") === role) {
+              if (option.getAttribute('data-value') === role) {
                 option.click();
               }
             });
           }
         }
         // Enable role select
-        roleButton && roleButton.classList.remove("disabled");
+        roleButton && roleButton.classList.remove('disabled');
       }
 
       // Close the user modal and reset to add mode
       function closeUserModal() {
-        const modal = document.getElementById("user-modal");
+        const modal = document.getElementById('user-modal');
 
-        modal.classList.add("hidden");
-        modal.classList.remove("flex");
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
 
-        modal.querySelector("h1").textContent = "Add New User";
-        modal.querySelector("p.text-sm").textContent =
-          "Fill in the details to create a new user account.";
+        modal.querySelector('h1').textContent = 'Add New User';
+        modal.querySelector('p.text-sm').textContent =
+          'Fill in the details to create a new user account.';
 
-        const form = document.getElementById("user-form");
-        form.action = "/user/add";
-        form.querySelector("button[type='submit']").textContent = "Add User";
+        const form = document.getElementById('user-form');
+        form.action = '/user/add';
+        form.querySelector("button[type='submit']").textContent = 'Add User';
 
         // Enable email field
-        document.getElementById("user-email").readOnly = false;
+        document.getElementById('user-email').readOnly = false;
 
         // Show password field in add mode
-        const passwordInput = document.getElementById("user-password");
+        const passwordInput = document.getElementById('user-password');
         if (passwordInput) {
-          const passwordField = passwordInput.closest(".mb-8");
-          passwordField && (passwordField.style.display = "");
+          const passwordField = passwordInput.closest('.mb-8');
+          passwordField && (passwordField.style.display = '');
         }
 
         form.reset();

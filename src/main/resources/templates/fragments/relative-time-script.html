@@ -6,7 +6,7 @@
     dayjs.extend(dayjs_plugin_relativeTime);
 
     // Update all elements with class .relative-date to show relative time
-    function updateRelativeDates(selector = ".relative-date") {
+    function updateRelativeDates(selector = '.relative-date') {
       const elements = document.querySelectorAll(selector);
       elements.forEach((el) => {
         const isoDate = el.dataset.createdAt;
@@ -17,7 +17,7 @@
     }
 
     // Run updateRelativeDates on page load
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener('DOMContentLoaded', function () {
       updateRelativeDates();
     });
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
     <title>JSONBin Config Manager - User Management</title>
@@ -161,13 +161,18 @@
                           type="button"
                           class="w-full text-left px-4 py-2 text-xs text-red-text hover:bg-red-bg hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
                           th:attr="data-action-url=@{'/user/' + ${user.id} + '/delete'},data-username=${user.name}"
-                          onclick="openConfirmModal({
-                            actionUrl: this.dataset.actionUrl,
-                            title: 'Delete User',
-                            message: 'Are you sure you want to delete user <span class=\'font-semibold\'>' + this.dataset.username + '</span>? This action cannot be undone.',
-                            confirmText: 'Delete',
-                            cancelText: 'Cancel'
-                          })"
+                          onclick="
+                            openConfirmModal({
+                              actionUrl: this.dataset.actionUrl,
+                              title: 'Delete User',
+                              message:
+                                'Are you sure you want to delete user <span class=\'font-semibold\'>' +
+                                this.dataset.username +
+                                '</span>? This action cannot be undone.',
+                              confirmText: 'Delete',
+                              cancelText: 'Cancel',
+                            })
+                          "
                           th:disabled="${user.role.name() == 'ADMIN' ? !#authorization.expression('hasRole(''SUPER_ADMIN'')') : !#authorization.expression('hasAnyRole(''ADMIN'',''SUPER_ADMIN'')') }"
                         >
                           Delete
@@ -182,24 +187,24 @@
                   function toggleOptionsMenu(btn) {
                     // Close other menus
                     document
-                      .querySelectorAll("[data-options-menu]")
-                      .forEach((menu) => menu.classList.add("hidden"));
+                      .querySelectorAll('[data-options-menu]')
+                      .forEach((menu) => menu.classList.add('hidden'));
                     // Toggle this menu
                     const menu = btn.parentElement.querySelector(
-                      "[data-options-menu]"
+                      '[data-options-menu]',
                     );
-                    if (menu) menu.classList.toggle("hidden");
+                    if (menu) menu.classList.toggle('hidden');
                   }
                   // Close menus on the outside click
-                  document.addEventListener("click", function (event) {
+                  document.addEventListener('click', function (event) {
                     const isOptionsBtn = event.target.closest(
-                      'button[onclick="toggleOptionsMenu(this)"]'
+                      'button[onclick="toggleOptionsMenu(this)"]',
                     );
-                    const isMenu = event.target.closest("[data-options-menu]");
+                    const isMenu = event.target.closest('[data-options-menu]');
                     if (!isOptionsBtn && !isMenu) {
                       document
-                        .querySelectorAll("[data-options-menu]")
-                        .forEach((menu) => menu.classList.add("hidden"));
+                        .querySelectorAll('[data-options-menu]')
+                        .forEach((menu) => menu.classList.add('hidden'));
                     }
                   });
                 </script>
