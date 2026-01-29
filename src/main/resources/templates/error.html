@@ -8,10 +8,10 @@
   </head>
 
   <body
-    class="poppins-regular bg-primary-light min-h-screen flex items-center justify-center"
+    class="poppins-regular bg-neutral-200 min-h-screen flex items-center justify-center"
   >
     <div
-      class="flex flex-col items-center w-full max-w-md sm:max-w-lg text-center p-6 sm:p-8 bg-primary-lighter rounded-2xl shadow-md"
+      class="flex flex-col items-center w-full max-w-md sm:max-w-lg text-center p-6 sm:p-8 bg-neutral-100 rounded-2xl shadow-sm border border-neutral-200"
     >
       <div class="mb-4 text-red-text">
         <svg
@@ -41,24 +41,24 @@
         </svg>
       </div>
 
-      <h1 class="text-xl sm:text-2xl font-semibold text-primary-dark">
+      <h1 class="text-xl sm:text-2xl font-semibold text-neutral-700">
         <span th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|"
           >500 Internal Server Error</span
         >
       </h1>
 
-      <p class="mt-2 sm:mt-4 text-sm sm:text-base text-primary-base">
+      <p class="mt-2 sm:mt-4 text-sm sm:text-base text-neutral-600">
         An unexpected error occurred. Please try again later.
       </p>
 
       <div
-        class="mt-3 sm:mt-4 rounded-lg bg-primary-light border border-primary-base p-3 w-full text-left"
+        class="mt-3 sm:mt-4 rounded-lg bg-neutral-200 border border-neutral-200 p-3 w-full text-left"
       >
-        <p class="text-xs sm:text-sm font-medium text-primary-dark">
+        <p class="text-xs sm:text-sm font-medium text-neutral-700">
           Error Details:
         </p>
         <code
-          class="block mt-1 text-xs sm:text-sm text-primary-base"
+          class="block mt-1 text-xs sm:text-sm text-neutral-600"
           th:utext="${errorMessage}"
         >
           errorMessage: An unexpected error occurred.
@@ -70,7 +70,7 @@
       >
         <a
           th:href="@{/dashboard}"
-          class="flex w-full sm:w-auto items-center justify-center rounded-lg h-10 sm:h-12 px-4 sm:px-5 bg-primary-base text-primary-light font-semibold text-sm sm:text-base hover:bg-primary-mid hover:text-primary-dark transition-colors"
+          class="flex w-full sm:w-auto items-center justify-center rounded-lg h-10 sm:h-12 px-4 sm:px-5 bg-neutral-100 text-primary border border-primary-light font-semibold text-sm sm:text-base hover:bg-primary-light hover:text-white transition-colors"
         >
           Back to Dashboard
         </a>

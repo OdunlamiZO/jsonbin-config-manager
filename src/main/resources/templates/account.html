@@ -12,25 +12,29 @@
     <div class="jsonbin-page">
       <div th:replace="fragments/header :: header"></div>
 
-      <div class="flex-1 p-8 flex flex-col items-center gap-8 bg-primary-light">
+      <div class="flex-1 p-8 flex flex-col items-center gap-8 bg-neutral-200">
         <div class="w-2/3 max-w-[800px] space-y-2">
-          <h1 class="text-2xl font-semibold">Account</h1>
-          <p>View your profile and manage password settings.</p>
+          <h1 class="text-2xl font-semibold text-neutral-700">Account</h1>
+          <p class="text-neutral-600">
+            View your profile and manage password settings.
+          </p>
         </div>
 
         <div
-          class="w-2/3 max-w-[800px] py-6 border border-primary-mid bg-white rounded-lg"
+          class="w-2/3 max-w-[800px] py-6 border border-neutral-200 bg-neutral-100 rounded-lg shadow-sm"
         >
-          <div class="px-6 pb-6 space-y-1 border-b border-primary-mid">
-            <h1 class="text-lg font-medium">Profile Information</h1>
-            <p class="text-sm">Your personal details.</p>
+          <div class="px-6 pb-6 space-y-1 border-b border-neutral-200">
+            <h1 class="text-lg font-medium text-neutral-700">
+              Profile Information
+            </h1>
+            <p class="text-sm text-neutral-600">Your personal details.</p>
           </div>
 
           <div class="grid grid-cols-3 px-6 pt-6 gap-2">
             <div class="col-span-1 space-y-1">
-              <span class="block text-primary-base">Role</span>
+              <span class="block text-neutral-600">Role</span>
               <span
-                class="block"
+                class="block text-neutral-700"
                 th:text="${#authentication.principal?.authorities[0]?.authority == 'ROLE_SUPER_ADMIN' ? 'Super Admin' :
                 #authentication.principal?.authorities[0]?.authority == 'ROLE_ADMIN' ? 'Admin' :
                 #authentication.principal?.authorities[0]?.authority == 'ROLE_EDITOR' ? 'Editor' :
@@ -40,9 +44,9 @@
             </div>
 
             <div class="col-span-2 space-y-1">
-              <span class="block text-primary-base">Email</span>
+              <span class="block text-neutral-600">Email</span>
               <span
-                class="block"
+                class="block text-neutral-700"
                 th:text="${#authentication.principal?.username}"
               ></span>
             </div>
@@ -50,11 +54,13 @@
         </div>
 
         <div
-          class="w-2/3 max-w-[800px] py-6 border border-primary-mid bg-white rounded-lg"
+          class="w-2/3 max-w-[800px] py-6 border border-neutral-200 bg-neutral-100 rounded-lg shadow-sm"
         >
-          <div class="px-6 pb-6 space-y-1 border-b border-primary-mid">
-            <h1 class="text-lg font-medium">Change Password</h1>
-            <p class="text-sm">
+          <div class="px-6 pb-6 space-y-1 border-b border-neutral-200">
+            <h1 class="text-lg font-medium text-neutral-700">
+              Change Password
+            </h1>
+            <p class="text-sm text-neutral-600">
               Ensure your account is using a long, random password to stay
               secure.
             </p>
@@ -87,49 +93,49 @@
             <div class="mb-4">
               <label
                 for="currentPassword"
-                class="block mb-1 text-primary-base text-sm"
+                class="block mb-1 text-neutral-600 text-sm"
                 >Current Password</label
               >
               <input
                 id="currentPassword"
                 name="currentPassword"
                 type="password"
-                class="w-full border border-primary-base rounded-md px-3 py-2 text-sm focus:outline-none focus:border-primary-dark focus:ring-1 focus:ring-primary-dark"
+                class="w-full border border-neutral-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
               />
             </div>
 
             <div class="mb-4">
               <label
                 for="newPassword"
-                class="block mb-1 text-primary-base text-sm"
+                class="block mb-1 text-neutral-600 text-sm"
                 >New Password</label
               >
               <input
                 id="newPassword"
                 name="newPassword"
                 type="password"
-                class="w-full border border-primary-base rounded-md px-3 py-2 text-sm focus:outline-none focus:border-primary-dark focus:ring-1 focus:ring-primary-dark"
+                class="w-full border border-neutral-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
               />
             </div>
 
             <div class="mb-6">
               <label
                 for="confirmNewPassword"
-                class="block mb-1 text-primary-base text-sm"
+                class="block mb-1 text-neutral-600 text-sm"
                 >Confirm New Password</label
               >
               <input
                 id="confirmNewPassword"
                 name="confirmNewPassword"
                 type="password"
-                class="w-full border border-primary-base rounded-md px-3 py-2 text-sm focus:outline-none focus:border-primary-dark focus:ring-1 focus:ring-primary-dark"
+                class="w-full border border-neutral-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
               />
             </div>
 
             <div class="flex justify-end">
               <button
                 type="submit"
-                class="bg-primary-dark text-white px-4 py-2 rounded-lg hover:bg-primary-base"
+                class="bg-neutral-100 text-primary border border-primary-light px-4 py-2 rounded-lg hover:bg-primary-light hover:text-white"
               >
                 Save
               </button>
