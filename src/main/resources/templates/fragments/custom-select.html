@@ -6,14 +6,14 @@
   <div class="relative w-full min-w-[220px] space-y-3">
     <label
       th:for="${id}"
-      class="block text-sm font-medium text-primary-base mb-1"
+      class="block text-sm font-medium text-neutral-600 mb-1"
       th:text="${label}"
     ></label>
 
     <button
       type="button"
       th:id="${id} + '-button'"
-      class="w-full h-10 border border-primary-dark rounded px-3 py-2 text-left text-base text-primary-dark bg-white focus:outline-none focus:border-primary-base focus:ring-1 focus:ring-primary-base flex justify-between items-center shadow-sm hover:bg-primary-light transition-colors"
+      class="w-full h-10 border border-neutral-300 rounded px-3 py-2 text-left text-base text-neutral-700 bg-neutral-100 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary flex justify-between items-center shadow-sm hover:bg-neutral-200 transition-colors"
       aria-haspopup="listbox"
       aria-expanded="false"
     >
@@ -22,7 +22,7 @@
       ></span>
 
       <svg
-        class="ml-2 h-5 w-5 text-primary-dark"
+        class="ml-2 h-5 w-5 text-neutral-600"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
@@ -39,7 +39,7 @@
 
     <div
       th:id="${id} + '-dropdown'"
-      class="hidden absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white border border-primary-dark shadow-xl"
+      class="hidden absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-neutral-100 border border-neutral-200 shadow-xl"
       role="listbox"
       tabindex="-1"
     >
@@ -50,10 +50,10 @@
         th:id="${id + '-hidden-input'}"
       />
 
-      <ul class="max-h-60 py-1 text-base text-primary-dark">
+      <ul class="max-h-60 py-1 text-base text-neutral-700">
         <li
           th:each="opt : ${options}"
-          class="cursor-pointer px-4 py-2 hover:bg-primary-dark hover:text-white text-left transition-colors"
+          class="cursor-pointer px-4 py-2 hover:bg-neutral-100 hover:text-neutral-700 text-left transition-colors"
           th:text="${opt.value}"
           th:attr="data-value=${opt.key}, data-label=${opt.value}, data-id=${id}"
           role="option"

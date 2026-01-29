@@ -9,12 +9,12 @@
 
   <body>
     <div
-      class="p-4 w-full border-b border-primary-mid flex items-center justify-between"
+      class="p-4 w-full border-b border-neutral-200 bg-neutral-200 flex items-center justify-between"
     >
       <div class="flex items-center gap-2">
         <span th:replace="fragments/json-icon :: jsonIcon(size=28)"></span>
 
-        <span class="text-lg font-semibold tracking-wide">
+        <span class="text-lg font-semibold tracking-wide text-neutral-700">
           JSONBin Config Manager
         </span>
       </div>
@@ -22,18 +22,18 @@
       <div class="flex gap-4">
         <a
           th:href="@{/user}"
-          class="flex items-center justify-center rounded-full h-12 w-12 bg-primary-light text-primary-dark hover:bg-primary-mid hover:text-primary-base transition-colors focus:outline-none focus:ring-2 focus:ring-primary-mid focus:ring-offset-2 active:scale-95"
+          class="flex items-center justify-center rounded-full h-12 w-12 bg-neutral-100 text-neutral-700 border border-neutral-200 hover:bg-neutral-300 hover:text-neutral-700 transition-colors focus:outline-none focus:ring-2 focus:ring-neutral-200 focus:ring-offset-2 active:scale-95"
           title="User Management"
           aria-label="User Management"
         >
-          <span class="material-symbols-outlined text-primary-dark"
+          <span class="material-symbols-outlined text-neutral-600"
             >manage_accounts</span
           >
         </a>
 
         <div class="relative">
           <button
-            class="h-12 w-12 rounded-full flex items-center justify-center bg-primary-dark text-white text-lg font-semibold"
+            class="h-12 w-12 rounded-full flex items-center justify-center bg-neutral-100 text-primary border border-primary-light text-lg font-semibold"
             onclick="toggleMenu()"
           >
             <span
@@ -43,16 +43,16 @@
 
           <div
             id="main-menu"
-            class="absolute right-0 mt-2 w-48 bg-primary-light shadow-lg rounded-lg border border-primary-light hidden z-50"
+            class="absolute right-0 mt-2 w-48 bg-neutral-100 shadow-lg rounded-lg border border-neutral-200 hidden z-50"
           >
             <ul class="py-2">
               <li>
                 <a
                   th:href="@{/dashboard}"
-                  class="flex items-center gap-3 w-full px-4 py-2 text-primary-dark hover:bg-primary-dark hover:text-white transition-colors group"
+                  class="flex items-center gap-3 w-full px-4 py-2 text-neutral-700 hover:bg-neutral-200 hover:text-neutral-800 transition-colors group"
                 >
                   <span
-                    class="material-symbols-outlined text-primary-dark group-hover:text-white transition-colors text-[20px]"
+                    class="material-symbols-outlined text-neutral-600 group-hover:text-neutral-800 transition-colors text-[20px]"
                     >dashboard</span
                   >
                   Dashboard
@@ -62,10 +62,10 @@
               <li>
                 <a
                   th:href="@{/account}"
-                  class="flex items-center gap-3 w-full px-4 py-2 text-primary-dark hover:bg-primary-dark hover:text-white transition-colors group"
+                  class="flex items-center gap-3 w-full px-4 py-2 text-neutral-700 hover:bg-neutral-200 hover:text-neutral-800 transition-colors group"
                 >
                   <span
-                    class="material-symbols-outlined text-primary-dark group-hover:text-white transition-colors text-[20px]"
+                    class="material-symbols-outlined text-neutral-600 group-hover:text-neutral-800 transition-colors text-[20px]"
                     >person</span
                   >
                   Account
@@ -76,10 +76,10 @@
                 <form th:action="@{/logout}" method="post" class="w-full">
                   <button
                     type="submit"
-                    class="flex items-center gap-3 w-full px-4 py-2 text-primary-dark hover:bg-red-bg hover:text-red-text transition-colors group"
+                    class="flex items-center gap-3 w-full px-4 py-2 text-neutral-700 hover:bg-red-bg hover:text-red-text transition-colors group"
                   >
                     <span
-                      class="material-symbols-outlined text-primary-dark group-hover:text-red-text transition-colors text-[20px]"
+                      class="material-symbols-outlined text-neutral-600 group-hover:text-red-text transition-colors text-[20px]"
                       >logout</span
                     >
                     Logout
