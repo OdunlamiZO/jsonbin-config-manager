@@ -4,6 +4,7 @@
     <title>JSONBin Config Manager - Dashboard</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" th:href="@{/css/ui-tokens.css}" />
     <link rel="stylesheet" th:href="@{/css/fragments/modals/modal.css}" />
@@ -17,9 +18,11 @@
 
   <body class="poppins-regular">
     <div class="jsonbin-page">
-      <div th:replace="fragments/header :: header"></div>
+      <div th:replace="~{fragments/header :: header}"></div>
 
-      <div class="flex-1 px-24 py-8 bg-neutral-200 flex flex-col gap-4">
+      <div
+        class="flex-1 px-4 py-6 sm:px-8 md:px-24 md:py-8 bg-neutral-200 flex flex-col gap-4"
+      >
         <div class="flex items-center justify-between">
           <span class="text-lg font-semibold text-neutral-700">Projects</span>
 
@@ -40,11 +43,23 @@
           th:if="${#lists.isEmpty(projects)}"
           class="flex-1 flex flex-col items-center justify-center text-neutral-600"
         >
+          <style>
+            .empty-folder-icon {
+              font-size: 72px;
+            }
+            @media (min-width: 640px) {
+              .empty-folder-icon {
+                font-size: 80px;
+              }
+            }
+          </style>
+
           <span
-            class="material-symbols-outlined text-neutral-400 text-[48px] mb-3"
+            class="material-symbols-outlined text-neutral-400 mb-3 empty-folder-icon"
             >folder_open</span
           >
-          <span class="text-base"
+
+          <span class="text-base text-center"
             >No projects found. Click <b>New Project</b> to get started.</span
           >
         </div>
@@ -55,9 +70,9 @@
             class="border border-neutral-200 bg-neutral-100 rounded-lg shadow-sm"
           >
             <div
-              class="p-4 flex items-center justify-between border-b border-neutral-200"
+              class="p-4 flex flex-col items-center gap-2 sm:flex-row sm:items-start sm:justify-between border-b border-neutral-200"
             >
-              <div>
+              <div class="text-center sm:text-left">
                 <h2
                   class="text-lg font-semibold text-neutral-700"
                   th:text="${project.name}"
@@ -96,10 +111,10 @@
               </div>
             </div>
 
-            <div class="flex">
+            <div class="flex flex-col lg:flex-row">
               <div
                 th:each="env,iterStat : ${project.envs}"
-                th:class="${'p-3 flex-1' + (!iterStat.last ? ' border-r border-neutral-200' : '')}"
+                th:class="${'p-3 flex-1 min-w-0' + (!iterStat.last ? ' border-b border-neutral-200 lg:border-b-0 lg:border-r' : '')}"
               >
                 <div class="flex items-center justify-between">
                   <span
@@ -125,15 +140,27 @@
                       class="flex items-center gap-2 variable-row"
                       th:attr="data-key=${keyStat.key}"
                     >
-                      <span
-                        class="flex-1 bg-neutral-200 border border-neutral-200 rounded px-2 py-1 text-xs text-neutral-600"
-                        th:text="${keyStat.key}"
-                      ></span>
+                      <div class="relative group flex-1 min-w-0">
+                        <span
+                          class="block truncate bg-neutral-200 border border-neutral-200 rounded px-2 py-1 text-xs text-neutral-600"
+                          th:text="${keyStat.key}"
+                        ></span>
+                        <div
+                          class="absolute top-full left-0 mt-1 w-max whitespace-nowrap text-xs font-normal bg-primary-dark text-primary-lighter rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+                          th:text="${keyStat.key}"
+                        ></div>
+                      </div>
 
-                      <span
-                        class="flex-1 bg-neutral-200 border border-neutral-200 rounded px-2 py-1 text-xs text-neutral-700"
-                        th:text="${keyStat.value}"
-                      ></span>
+                      <div class="relative group flex-1 min-w-0">
+                        <span
+                          class="block truncate bg-neutral-200 border border-neutral-200 rounded px-2 py-1 text-xs text-neutral-700"
+                          th:text="${keyStat.value}"
+                        ></span>
+                        <div
+                          class="absolute top-full left-0 mt-1 w-max whitespace-nowrap text-xs font-normal bg-primary-dark text-primary-lighter rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+                          th:text="${keyStat.value}"
+                        ></div>
+                      </div>
 
                       <button
                         type="button"
@@ -266,7 +293,7 @@
                       if (addBtn) addBtn.style.display = 'none';
                     }
 
-                    // Cancel editing a variable and restore previous state
+                    // Cancel editing a variable and restore the previous state
                     function cancelEditVariable(cancelBtn) {
                       const form = cancelBtn.form;
                       const wrapper = form.closest('div[style]');
@@ -294,11 +321,11 @@
         </div>
       </div>
 
-      <div th:replace="fragments/project-modal :: projectModal"></div>
+      <div th:replace="~{fragments/project-modal :: projectModal}"></div>
 
-      <div th:replace="fragments/modals/confirm-modal :: confirmModal"></div>
+      <div th:replace="~{fragments/modals/confirm-modal :: confirmModal}"></div>
 
-      <div th:replace="fragments/footer :: footer"></div>
+      <div th:replace="~{fragments/footer :: footer}"></div>
     </div>
   </body>
 </html>

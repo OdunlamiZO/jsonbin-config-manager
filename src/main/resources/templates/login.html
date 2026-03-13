@@ -4,20 +4,25 @@
     <title>JSONBin Config Manager - Login</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" th:href="@{/css/application.css}" />
   </head>
 
   <body class="poppins-regular bg-neutral-200">
     <div class="jsonbin-page">
-      <div class="flex-1 flex items-center justify-center">
+      <div class="flex-1 flex items-center justify-center p-4">
         <div
           class="p-6 w-4/5 max-w-[480px] bg-neutral-100 shadow-sm border border-neutral-200 rounded-lg flex flex-col items-center gap-6"
         >
           <div class="flex flex-col items-center gap-2">
-            <span th:replace="fragments/json-icon :: jsonIcon(size=32)"></span>
+            <span
+              th:replace="~{fragments/json-icon :: jsonIcon(size=40)}"
+            ></span>
 
-            <span class="text-xl font-semibold tracking-wide text-neutral-700">
+            <span
+              class="text-sm sm:text-xl font-semibold tracking-wide text-neutral-700 whitespace-nowrap"
+            >
               JSONBin Config Manager
             </span>
           </div>
@@ -98,7 +103,7 @@
         </div>
       </div>
 
-      <div th:replace="fragments/footer :: footer"></div>
+      <div th:replace="~{fragments/footer :: footer}"></div>
     </div>
   </body>
 </html>

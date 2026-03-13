@@ -46,7 +46,7 @@ WORKDIR /app
 RUN mkdir -p /data
 
 # Copy the built JAR
-COPY --from=build /app/target/jsonbin-config-manager-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/target/jsonbin-config-manager-1.0-SNAPSHOT.jar app.jar
 
 # Expose app port
 EXPOSE 3000

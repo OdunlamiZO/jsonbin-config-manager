@@ -36,7 +36,7 @@ public class ConfigServiceImpl implements ConfigService {
         }
 
         Bin<String> collectionBin;
-        if (Objects.nonNull(collectionId)) {
+        if (Objects.nonNull(collectionId) && !collectionId.isBlank()) {
             collectionBin = jsonBin.updateCollection(collectionId, name);
         } else {
             collectionBin = jsonBin.createCollection(name);

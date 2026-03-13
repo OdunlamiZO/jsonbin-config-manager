@@ -3,7 +3,7 @@
   xmlns:th="http://www.thymeleaf.org"
   th:fragment="searchForm(actionUrl, searchValue)"
 >
-  <div class="flex items-center space-x-2 relative w-full max-w-md">
+  <div class="flex items-center space-x-2 relative w-full">
     <form
       method="get"
       th:action="@{__${actionUrl}__}"
@@ -29,9 +29,10 @@
 
       <button
         type="submit"
-        class="px-4 py-2 rounded bg-neutral-100 text-primary border border-primary-light font-semibold hover:bg-primary-light hover:text-white whitespace-nowrap transition-opacity"
+        class="flex items-center justify-center px-2 py-2 rounded bg-neutral-100 text-primary border border-primary-light hover:bg-primary-light hover:text-white transition-colors"
+        aria-label="Search"
       >
-        Search
+        <span class="material-symbols-outlined text-[20px]">search</span>
       </button>
     </form>
   </div>

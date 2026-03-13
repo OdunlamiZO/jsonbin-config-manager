@@ -12,9 +12,11 @@
       class="p-4 w-full border-b border-neutral-200 bg-neutral-200 flex items-center justify-between"
     >
       <div class="flex items-center gap-2">
-        <span th:replace="fragments/json-icon :: jsonIcon(size=28)"></span>
+        <span th:replace="~{fragments/json-icon :: jsonIcon(size=40)}"></span>
 
-        <span class="text-lg font-semibold tracking-wide text-neutral-700">
+        <span
+          class="hidden sm:block text-lg font-semibold tracking-wide text-neutral-700"
+        >
           JSONBin Config Manager
         </span>
       </div>

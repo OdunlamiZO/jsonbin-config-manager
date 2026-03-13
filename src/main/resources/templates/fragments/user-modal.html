@@ -4,7 +4,7 @@
     id="user-modal"
     class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 justify-center items-center z-50"
   >
-    <div class="bg-neutral-100 p-6 rounded-lg w-full max-w-md relative">
+    <div class="bg-neutral-100 p-6 rounded-lg w-full max-w-md mx-4 relative">
       <button
         class="absolute top-3 right-3 text-neutral-600 hover:text-neutral-700"
         onclick="closeUserModal()"
@@ -41,7 +41,7 @@
             name="name"
             id="user-name"
             placeholder="John Doe"
-            class="w-full border border-neutral-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+            class="w-full border border-neutral-300 rounded-md px-3 py-2 text-sm bg-neutral-100 text-neutral-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
           />
 
           <div
@@ -58,7 +58,7 @@
             name="email"
             id="user-email"
             placeholder="admin@example.com"
-            class="w-full border border-neutral-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+            class="w-full border border-neutral-300 rounded-md px-3 py-2 text-sm bg-neutral-100 text-neutral-700 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
           />
           <div
             id="user-email-error"
@@ -68,7 +68,7 @@
 
         <div class="mb-4 space-y-1">
           <div
-            th:replace="fragments/custom-select :: customSelect('user-role', 'role', 'Role', ${roleOptions}, null, false)"
+            th:replace="~{fragments/custom-select :: customSelect('user-role', 'role', 'Role', ${roleOptions}, null, false)}"
           ></div>
         </div>
 

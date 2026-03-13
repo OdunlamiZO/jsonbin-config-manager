@@ -3,8 +3,9 @@
   xmlns:th="http://www.thymeleaf.org"
   th:fragment="customSelect(id, name, label, options, selectedKey, autoSubmit)"
 >
-  <div class="relative w-full min-w-[220px] space-y-3">
+  <div class="relative w-full min-w-[140px]">
     <label
+      th:if="${label != null}"
       th:for="${id}"
       class="block text-sm font-medium text-neutral-600 mb-1"
       th:text="${label}"
@@ -53,7 +54,7 @@
       <ul class="max-h-60 py-1 text-base text-neutral-700">
         <li
           th:each="opt : ${options}"
-          class="cursor-pointer px-4 py-2 hover:bg-neutral-100 hover:text-neutral-700 text-left transition-colors"
+          class="cursor-pointer px-4 py-2 hover:bg-neutral-200 hover:text-neutral-700 text-left transition-colors"
           th:text="${opt.value}"
           th:attr="data-value=${opt.key}, data-label=${opt.value}, data-id=${id}"
           role="option"

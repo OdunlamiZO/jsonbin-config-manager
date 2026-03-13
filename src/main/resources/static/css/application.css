@@ -9,6 +9,13 @@
     @apply m-0 p-0 box-border;
   }
 
+  @media (max-width: 479px) {
+    .modal__dialog {
+      margin: 0 1rem;
+      max-width: calc(100vw - 2rem);
+    }
+  }
+
   .jsonbin-page {
     @apply h-screen flex flex-col;
   }

@@ -23,12 +23,12 @@ const darkModal = {
   '--modal-bg': 'var(--color-neutral-100)',
   '--modal-title-color': 'var(--color-neutral-800)',
   '--modal-text-color': 'var(--color-neutral-600)',
-  '--modal-btn-secondary-bg': 'var(--color-neutral-100)',
-  '--modal-btn-secondary-text': 'var(--color-neutral-900)',
-  '--modal-btn-secondary-border': 'var(--color-neutral-300)',
-  '--modal-btn-secondary-hover-bg': 'var(--color-neutral-200)',
+  '--modal-btn-secondary-bg': 'var(--color-neutral-300)',
+  '--modal-btn-secondary-text': 'var(--color-neutral-800)',
+  '--modal-btn-secondary-border': 'var(--color-neutral-400)',
+  '--modal-btn-secondary-hover-bg': 'var(--color-neutral-400)',
   '--modal-btn-secondary-hover-text': 'var(--color-neutral-900)',
-  '--modal-btn-secondary-hover-border': 'var(--color-neutral-300)',
+  '--modal-btn-secondary-hover-border': 'var(--color-neutral-500)',
   '--modal-shadow': '0 10px 25px rgba(0, 0, 0, 0.3)',
 };
 

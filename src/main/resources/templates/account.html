@@ -4,16 +4,19 @@
     <title>JSONBin Config Manager - Dashboard</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" th:href="@{/css/application.css}" />
   </head>
 
   <body class="poppins-regular">
     <div class="jsonbin-page">
-      <div th:replace="fragments/header :: header"></div>
+      <div th:replace="~{fragments/header :: header}"></div>
 
-      <div class="flex-1 p-8 flex flex-col items-center gap-8 bg-neutral-200">
-        <div class="w-2/3 max-w-[800px] space-y-2">
+      <div
+        class="flex-1 px-4 py-6 sm:p-8 flex flex-col items-center gap-8 bg-neutral-200"
+      >
+        <div class="w-full max-w-[800px] space-y-2">
           <h1 class="text-2xl font-semibold text-neutral-700">Account</h1>
           <p class="text-neutral-600">
             View your profile and manage password settings.
@@ -21,16 +24,16 @@
         </div>
 
         <div
-          class="w-2/3 max-w-[800px] py-6 border border-neutral-200 bg-neutral-100 rounded-lg shadow-sm"
+          class="w-full max-w-[800px] py-6 border border-neutral-200 bg-neutral-100 rounded-lg shadow-sm"
         >
-          <div class="px-6 pb-6 space-y-1 border-b border-neutral-200">
+          <div class="px-4 sm:px-6 pb-6 space-y-1 border-b border-neutral-200">
             <h1 class="text-lg font-medium text-neutral-700">
               Profile Information
             </h1>
             <p class="text-sm text-neutral-600">Your personal details.</p>
           </div>
 
-          <div class="grid grid-cols-3 px-6 pt-6 gap-2">
+          <div class="grid grid-cols-1 sm:grid-cols-3 px-4 sm:px-6 pt-6 gap-4">
             <div class="col-span-1 space-y-1">
               <span class="block text-neutral-600">Role</span>
               <span
@@ -54,9 +57,9 @@
         </div>
 
         <div
-          class="w-2/3 max-w-[800px] py-6 border border-neutral-200 bg-neutral-100 rounded-lg shadow-sm"
+          class="w-full max-w-[800px] py-6 border border-neutral-200 bg-neutral-100 rounded-lg shadow-sm"
         >
-          <div class="px-6 pb-6 space-y-1 border-b border-neutral-200">
+          <div class="px-4 sm:px-6 pb-6 space-y-1 border-b border-neutral-200">
             <h1 class="text-lg font-medium text-neutral-700">
               Change Password
             </h1>
@@ -66,7 +69,11 @@
             </p>
           </div>
 
-          <form class="px-6 pt-6" method="post" th:action="@{/password/update}">
+          <form
+            class="px-4 sm:px-6 pt-6"
+            method="post"
+            th:action="@{/password/update}"
+          >
             <div
               th:if="${success}"
               class="mb-6 flex items-center gap-3 px-4 py-3 rounded-lg bg-green-bg border border-green-text text-green-text"
@@ -144,7 +151,7 @@
         </div>
       </div>
 
-      <div th:replace="fragments/footer :: footer"></div>
+      <div th:replace="~{fragments/footer :: footer}"></div>
     </div>
   </body>
 </html>
